@@ -1,26 +1,120 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── FONT CSS VARIABLES (set by next/font on <html>) ─────────────── */
+/* next/font injects: --cinzel, --cormorant, --vibes onto <html> class */
+
+/* ── DESIGN TOKENS ────────────────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-champagne:    #f7f0e4;
+  --color-parchment:    #fdf8f0;
+  --color-sand:         #f0e8d8;
+  --color-gold:         #c9a96e;
+  --color-gold-deep:    #8a6030;
+  --color-espresso:     #2a1808;
+  --color-espresso-dk:  #1e1005;
+  --color-ink:          #2a1808;
+  --color-muted:        #9a7d5a;
+
+  /* Fonts — these reference CSS vars set by next/font on <html> */
+  --font-cinzel:    var(--cinzel), serif;
+  --font-cormorant: var(--cormorant), serif;
+  --font-vibes:     var(--vibes), cursive;
+
+  /* Animations */
+  --animate-sealFloat: sealFloat 4s ease-in-out infinite;
+  --animate-hintPulse: hintPulse 2s ease-in-out infinite;
+  --animate-ambPulse:  ambPulse 3s ease-in-out infinite;
+  --animate-rsvpPulse: rsvpPulse 3s ease-in-out infinite;
+  --animate-flOut:     flOut 1.8s ease-in-out infinite;
+  --animate-flIn:      flIn 1.2s ease-in-out infinite;
+  --animate-flGlow:    flGlow 2s ease-in-out infinite;
+  --animate-sparkle:   sparkleAnim linear forwards;
+  --animate-blink:     blink 0.9s step-end infinite;
+  --animate-fadeIn:    fadeIn 0.7s ease forwards;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── KEYFRAMES ────────────────────────────────────────────────────── */
+@keyframes sealFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+@keyframes ambPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+@keyframes rsvpPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,169,110,0.15), 0 6px 18px rgba(42,24,8,0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(201,169,110,0), 0 8px 26px rgba(42,24,8,0.45); }
+}
+@keyframes flOut {
+  0%, 100% { transform: scaleX(1) scaleY(1) rotate(0deg); }
+  15%       { transform: scaleX(0.87) scaleY(1.07) rotate(-2.5deg); }
+  35%       { transform: scaleX(1.07) scaleY(0.93) rotate(1.5deg); }
+  55%       { transform: scaleX(0.91) scaleY(1.08) rotate(-1deg); }
+  75%       { transform: scaleX(1.05) scaleY(0.95) rotate(2deg); }
+}
+@keyframes flIn {
+  0%, 100% { transform: scaleX(1) scaleY(1); opacity: 0.9; }
+  30%       { transform: scaleX(0.8) scaleY(1.13); opacity: 1; }
+  65%       { transform: scaleX(1.1) scaleY(0.88); opacity: 0.82; }
+}
+@keyframes flGlow {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.9; }
+}
+@keyframes sparkleAnim {
+  0%   { opacity: 0.9; transform: scale(1) translate(0, 0); }
+  100% { opacity: 0;   transform: scale(0.3) translate(var(--tx), var(--ty)); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+@keyframes fadeIn {
+  0%   { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── BASE STYLES ──────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #0d0a07;
+  }
+  body {
+    background-color: var(--color-champagne);
+    color: var(--color-ink);
+    font-family: var(--cormorant), Georgia, serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── UTILITIES ────────────────────────────────────────────────────── */
+@layer utilities {
+  .gold-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #c9a96e, transparent);
+  }
+  .gold-border {
+    position: absolute;
+    inset: 0.75rem;
+    border: 1px solid rgba(201,169,110,0.4);
+    pointer-events: none;
+  }
+  .gold-border-inner {
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(201,169,110,0.2);
+    pointer-events: none;
+  }
+  .card-grid {
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 22px, rgba(201,169,110,0.055) 22px, rgba(201,169,110,0.055) 23px),
+      repeating-linear-gradient(90deg, transparent, transparent 22px, rgba(201,169,110,0.055) 22px, rgba(201,169,110,0.055) 23px);
+  }
 }
