@@ -311,7 +311,7 @@ export default function ScratchReveal({ onRevealed, onOpen }: Props) {
   return (
     <div
       id="scratch-wrapper"
-      className="relative h-full w-full origin-center overflow-hidden bg-cover bg-center bg-no-repeat animate-scratchLive will-change-transform"
+      className="relative h-dvh min-h-dvh w-full origin-center overflow-hidden bg-cover bg-center bg-no-repeat animate-scratchLive will-change-transform"
       style={{ backgroundImage: `url(${SCRATCH_CARD_BG_SRC})` }}
     >
       <div className="gold-border" />
@@ -391,10 +391,6 @@ export default function ScratchReveal({ onRevealed, onOpen }: Props) {
                 decoding="async"
                 draggable={false}
                 className="mx-auto h-auto max-h-[min(46vh,24rem)] w-full max-w-[min(94vw,24rem)] object-contain object-center select-none"
-                style={{
-                  filter:
-                    'drop-shadow(0 10px 28px rgba(42,24,8,0.35)) drop-shadow(0 2px 6px rgba(0,0,0,0.2))',
-                }}
               />
             </span>
           </button>

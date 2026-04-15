@@ -25,10 +25,10 @@ export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' |
   }
 
   return (
-    <div className="min-h-screen flex items-start justify-center" style={{ background: '#0d0a07' }}>
-      <div className="w-full max-w-[430px] min-h-screen relative">
+    <div className="min-h-dvh flex items-start justify-center" style={{ background: '#0d0a07' }}>
+      <div className="relative min-h-dvh w-full max-w-[430px]">
         {phase === 'scratch' && (
-          <div className="w-full h-screen">
+          <div className="h-dvh w-full">
             <ScratchReveal onRevealed={handleRevealed} onOpen={handleOpen} />
           </div>
         )}
