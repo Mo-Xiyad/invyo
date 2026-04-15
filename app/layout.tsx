@@ -26,10 +26,37 @@ const vibes = Great_Vibes({
   display: 'swap',
 })
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://invyo.uk'
+const previewImage = '/assets/Z-y-logo.png'
+const teaserTitle = 'Celebrating Love, Joy, and Togetherness'
+const teaserDescription = 'Ibrahim Zimam & Yanal Ahmed invite you to share in a beautiful celebration of their union.'
+
 export const metadata: Metadata = {
   title: 'Ibrahim Zimam & Yanal Ahmed — Marriage Ceremony',
   description: 'You are invited.',
   robots: { index: false, follow: false },
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: teaserTitle,
+    description: teaserDescription,
+    url: siteUrl,
+    siteName: 'Ibrahim & Yanal Invitation',
+    images: [
+      {
+        url: previewImage,
+        width: 512,
+        height: 512,
+        alt: 'Ibrahim Zimam and Yanal Ahmed invitation monogram',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: teaserTitle,
+    description: teaserDescription,
+    images: [previewImage],
+  },
 }
 
 export const viewport: Viewport = {
@@ -42,7 +69,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cinzel.variable} ${cormorant.variable} ${vibes.variable}`}>
-      <body>{children}</body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   )
 }

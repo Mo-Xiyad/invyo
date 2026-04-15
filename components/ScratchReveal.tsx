@@ -8,11 +8,11 @@ import CornerOrnament from './CornerOrnament'
 const SVG_W = 1054
 const SVG_H = 1492
 const CANDLE_FLAMES: { svgX: number; svgY: number; scale: number; delay: number }[] = [
-  { svgX:  212, svgY:  1065, scale: 0.85, delay: 0.55 }, // left group
-  { svgX: 265, svgY:  1120, scale: 0.85, delay: 0.00 }, // back-tall candle
-  { svgX: 313, svgY:  1325, scale: 1.00, delay: 0.30 }, // tallest candle
-  { svgX: 230, svgY: 1385, scale: 0.85, delay: 0.90 }, // right-mid candle
-  // { svgX: 340, svgY: 1255, scale: 0.65, delay: 1.20 }, // right small candle
+  { svgX:  150, svgY:  995, scale: 0.85, delay: 0.55 }, // left group
+  { svgX: 212, svgY:  1065, scale: 0.85, delay: 0.00 }, // back-tall candle
+  { svgX: 269, svgY:  1128, scale: 0.70, delay: 0.30 }, // tallest candle
+  { svgX: 310, svgY: 1325, scale: 0.85, delay: 0.90 }, // right-mid candle
+  { svgX: 230, svgY: 1385, scale: 0.65, delay: 1.20 }, // right small candle
 ]
 
 /** Public asset — rasterized onto the scratch canvas (cover). */
@@ -311,7 +311,7 @@ export default function ScratchReveal({ onRevealed, onOpen }: Props) {
   return (
     <div
       id="scratch-wrapper"
-      className="relative h-dvh min-h-dvh w-full origin-center overflow-hidden bg-cover bg-center bg-no-repeat animate-scratchLive will-change-transform"
+      className="relative h-full w-full origin-center overflow-hidden bg-cover bg-center bg-no-repeat animate-scratchLive will-change-transform"
       style={{ backgroundImage: `url(${SCRATCH_CARD_BG_SRC})` }}
     >
       <div className="gold-border" />
@@ -391,6 +391,10 @@ export default function ScratchReveal({ onRevealed, onOpen }: Props) {
                 decoding="async"
                 draggable={false}
                 className="mx-auto h-auto max-h-[min(46vh,24rem)] w-full max-w-[min(94vw,24rem)] object-contain object-center select-none"
+                style={{
+                  filter:
+                    'drop-shadow(0 10px 28px rgba(42,24,8,0.35)) drop-shadow(0 2px 6px rgba(0,0,0,0.2))',
+                }}
               />
             </span>
           </button>

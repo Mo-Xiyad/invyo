@@ -65,17 +65,30 @@ export default function VenueMap() {
           href={DIRECTIONS_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 border border-gold/40 text-muted font-cinzel text-[7.5px] tracking-[2px] uppercase py-2.5 rounded-sm text-center"
+          className="flex-1 flex items-center justify-center gap-1.5 border border-gold/40 text-muted font-cinzel text-[7.5px] tracking-[2px] uppercase py-2.5 rounded-sm"
         >
-          📍 Get Directions
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#c9a96e', flexShrink: 0 }}>
+            <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          Get Directions
         </a>
         <a
           href={CALENDAR_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 border border-gold/40 text-muted font-cinzel text-[7.5px] tracking-[2px] uppercase py-2.5 rounded-sm text-center"
+          className="flex-1 flex items-center justify-center gap-1.5 border border-gold/40 text-muted font-cinzel text-[7.5px] tracking-[2px] uppercase py-2.5 rounded-sm"
         >
-          🗓 Add to Calendar
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#c9a96e', flexShrink: 0 }}>
+            <rect x="3" y="4" width="18" height="17" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <line x1="9" y1="15" x2="9" y2="15" strokeWidth="2"/>
+            <line x1="12" y1="15" x2="12" y2="15" strokeWidth="2"/>
+            <line x1="15" y1="15" x2="15" y2="15" strokeWidth="2"/>
+          </svg>
+          Add to Calendar
         </a>
       </div>
     </section>
