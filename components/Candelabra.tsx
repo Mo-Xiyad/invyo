@@ -41,17 +41,17 @@ export default function Candelabra({ className = '' }: { className?: string }) {
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <linearGradient id="fgC" x1="70" y1="8"  x2="70" y2="22" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stopColor="#fff4aa"/>
-          <stop offset="55%"  stopColor="#ffb830"/>
-          <stop offset="100%" stopColor="#e05010" stopOpacity="0.6"/>
+          <stop offset="0%"   stopColor="#fffef5"/>
+          <stop offset="45%"  stopColor="#fff3c8"/>
+          <stop offset="100%" stopColor="#ffd89a" stopOpacity="0.55"/>
         </linearGradient>
         <linearGradient id="fgM" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#fff4aa"/>
-          <stop offset="100%" stopColor="#ffb830" stopOpacity="0.75"/>
+          <stop offset="0%"   stopColor="#fffef5"/>
+          <stop offset="100%" stopColor="#ffe4a8" stopOpacity="0.68"/>
         </linearGradient>
         <linearGradient id="fgS" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#fff4aa"/>
-          <stop offset="100%" stopColor="#ffa020" stopOpacity="0.55"/>
+          <stop offset="0%"   stopColor="#fffef5"/>
+          <stop offset="100%" stopColor="#ffdf98" stopOpacity="0.5"/>
         </linearGradient>
       </defs>
 
@@ -64,7 +64,7 @@ export default function Candelabra({ className = '' }: { className?: string }) {
             {/* glow halo */}
             <circle data-candle={c.id} className="animate-flGlow"
               cx={c.cx} cy={c.cy} r={glowR}
-              fill="rgba(255,200,60,0.22)" filter="url(#cGlow)"/>
+              fill="rgba(255,238,210,0.32)" filter="url(#cGlow)"/>
             {/* outer flame */}
             <path data-candle={c.id} className="animate-flOut" filter="url(#cFlame)"
               style={{ transformOrigin: `${c.cx}px ${c.cy}px` }}
@@ -74,7 +74,7 @@ export default function Candelabra({ className = '' }: { className?: string }) {
             <path data-candle={c.id} className="animate-flIn" filter="url(#cFlame)"
               style={{ transformOrigin: `${c.cx}px ${c.cy}px` }}
               d={`M${c.cx} ${c.cy-innerR*1.5} C${c.cx-innerR*0.5} ${c.cy-innerR*0.5} ${c.cx-innerR*0.6} ${c.cy+innerR*0.3} ${c.cx} ${c.cy+innerR*0.5} C${c.cx+innerR*0.6} ${c.cy+innerR*0.3} ${c.cx+innerR*0.5} ${c.cy-innerR*0.5} ${c.cx} ${c.cy-innerR*1.5}Z`}
-              fill="rgba(255,245,185,0.95)"/>
+              fill="rgba(255,252,245,0.98)"/>
             {/* candle body */}
             <rect x={c.cx - 3} y={c.cy + outerR * 0.4}
               width="6" height={c.candleH} rx="1"

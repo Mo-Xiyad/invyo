@@ -1,7 +1,7 @@
 // components/InvitationPage.tsx
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import ScratchReveal from './ScratchReveal'
+import EnvelopeEntry from './EnvelopeEntry'
 import HeroSection from './HeroSection'
 import Countdown from './Countdown'
 import EventDetails from './EventDetails'
@@ -13,15 +13,11 @@ import RSVPSection from './RSVPSection'
 import AudioPlayer, { type AudioPlayerHandle } from './AudioPlayer'
 
 const LOADER_SRC = '/assets/loader.png'
-const CRITICAL_ASSETS = [
-  '/assets/scratch-to-reveal.svg',
-  '/assets/Elegant-vintage-floral-stationery-design.png',
-  '/assets/Elegant-gold-wax-seal-monogram.png',
-  '/assets/Elegant-floral-elegance-with-candlelight-glow.png',
-]
+const CRITICAL_ASSETS = ['/assets/Z-y-logo.png', '/assets/front-page-bg.png']
 
 export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' | '17:30' }) {
-  const [phase, setPhase] = useState<'scratch' | 'open'>('scratch')
+  const [phase, setPhase] = useState<'envelope' | 'open'>('envelope')
+  const [openingEnvelope, setOpeningEnvelope] = useState(false)
   const [loading, setLoading] = useState(true)
   const audioRef = useRef<AudioPlayerHandle>(null)
   const audioStartAttempted = useRef(false)
@@ -32,12 +28,13 @@ export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' |
     audioRef.current?.startMusic()
   }
 
-  const handleRevealed = () => {
+  const handleEnvelopeOpen = () => {
+    setOpeningEnvelope(true)
     attemptStartMusic()
-  }
-
-  const handleOpen = () => {
-    setPhase('open')
+    window.setTimeout(() => {
+      setPhase('open')
+      setOpeningEnvelope(false)
+    }, 1050)
   }
 
   useEffect(() => {
@@ -86,9 +83,9 @@ export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' |
           </div>
         )}
 
-        {!loading && phase === 'scratch' && (
+        {!loading && phase === 'envelope' && (
           <div className="h-dvh w-full">
-            <ScratchReveal onRevealed={handleRevealed} onOpen={handleOpen} />
+            <EnvelopeEntry opening={openingEnvelope} onOpen={handleEnvelopeOpen} />
           </div>
         )}
 

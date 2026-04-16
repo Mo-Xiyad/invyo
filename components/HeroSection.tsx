@@ -2,14 +2,13 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import Candelabra from './Candelabra'
-import CornerOrnament from './CornerOrnament'
+import HeroCandleFlames from './HeroCandleFlames'
 
 const NAME1 = 'Ibrahim Zimam'
 const NAME2 = 'Yanal Ahmed'
 const CHAR_DELAY = 60
 
-const HERO_BG_SRC = '/assets/Elegant-floral-elegance-with-candlelight-glow.png'
+const HERO_BG_SRC = '/assets/bg.png'
 
 export default function HeroSection() {
   const [line1, setLine1] = useState('')
@@ -59,21 +58,20 @@ export default function HeroSection() {
 
   return (
     <section className="relative flex min-h-dvh flex-col overflow-hidden bg-parchment text-center">
-      {/* Floral + candlelight art — full bleed; scrim keeps names readable */}
+      {/* bg.png — lighter wash + weaker edge vignette so the art’s frame/border stays visible */}
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${HERO_BG_SRC})` }}
         />
         <div
-          className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(253,248,240,0.9)_0%,rgba(253,248,240,0.7)_42%,rgba(253,248,240,0.78)_100%)]"
+          className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(253,248,240,0.22)_0%,rgba(253,248,240,0.1)_48%,rgba(253,248,240,0.2)_100%)]"
         />
-        <div className="absolute inset-0 card-grid opacity-[0.35]" />
         <div
-          className="absolute inset-0 mix-blend-multiply opacity-90"
+          className="absolute inset-0 opacity-[0.06]"
           style={{
             background:
-              'radial-gradient(ellipse 95% 75% at 50% 48%, transparent 22%, rgba(42,24,8,0.14) 100%)',
+              'radial-gradient(ellipse 105% 92% at 50% 48%, transparent 58%, rgba(74,52,28,0.08) 100%)',
           }}
         />
       </div>
@@ -85,19 +83,17 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="gold-border z-[1]" />
-      <div className="gold-border-inner z-[1]" />
+      {/* Live flames over the three candles in bg.png — same SVG motion as Candelabra */}
+      <div
+        // className="pointer-events-none absolute left-1/2 z-[2] w-[min(92%,420px)] -translate-x-1/2 top-[max(3.25rem,min(11dvh,104px))]"
+        aria-hidden
+      >
+        <HeroCandleFlames className="mx-auto h-auto w-full max-h-[min(14dvh,88px)] opacity-[0.94]" />
+      </div>
 
-      <CornerOrnament className="top-1 left-1 z-[1]" />
-      <CornerOrnament className="top-1 right-1 z-[1] scale-x-[-1]" />
-      <CornerOrnament className="bottom-1 left-1 z-[1] scale-y-[-1]" />
-      <CornerOrnament className="bottom-1 right-1 z-[1] [transform:scale(-1)]" />
-
-      <div className="relative z-[2] flex min-h-0 flex-1 flex-col justify-center px-5 pt-[max(2rem,env(safe-area-inset-top,0px))] pb-[max(2.5rem,env(safe-area-inset-bottom,0px))]">
-      <Candelabra className="w-36 mx-auto mb-5 relative" />
-
+      <div className="relative z-[2] flex min-h-0 flex-1 flex-col justify-center px-5 pt-[max(2rem,env(safe-area-inset-top,0px))] pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] translate-y-[min(5vh,2rem)]">
       <motion.p
-        className="font-cinzel text-[7px] tracking-[6px] text-gold uppercase mb-3 relative"
+        className="font-cinzel text-[7px] tracking-[6px] text-gold uppercase mb-5 relative"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.8 }}
@@ -164,7 +160,7 @@ export default function HeroSection() {
 
       {done && (
         <motion.div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex justify-center px-5 pb-[max(1.35rem,env(safe-area-inset-bottom,0px))] pt-3"
+          className="pointer-events-none absolute inset-x-0 bottom-6 z-[2] flex justify-center px-5 pb-[max(1.35rem,env(safe-area-inset-bottom,0px))] pt-3"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 0.55 }}

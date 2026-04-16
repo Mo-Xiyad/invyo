@@ -33,7 +33,7 @@ const AudioPlayer = forwardRef<AudioPlayerHandle>((_, ref) => {
     }
   }, [])
 
-  // Called by ScratchReveal on the first real user gesture so mobile browsers allow autoplay.
+  // Called when user opens the envelope so mobile browsers allow autoplay.
   useImperativeHandle(ref, () => ({
     startMusic() {
       const audio = audioRef.current

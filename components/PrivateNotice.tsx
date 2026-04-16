@@ -2,6 +2,7 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import SectionStationeryFrame from './SectionStationeryFrame'
 
 const CONTENT = {
   en: {
@@ -74,38 +75,39 @@ export default function PrivateNotice() {
         }}
       />
 
-      <div className="relative flex justify-center mb-4">
-        <button
-          type="button"
-          onClick={() => setLang((l) => (l === 'en' ? 'dv' : 'en'))}
-          className="flex items-center gap-0 border border-gold/30 rounded-full overflow-hidden font-cinzel text-[7px] tracking-[2px] uppercase"
-          aria-label="Toggle language"
-        >
-          <span
-            className={`px-3 py-1.5 transition-colors duration-200 ${
-              lang === 'en' ? 'bg-gold/20 text-champagne' : 'text-gold/50'
-            }`}
+      <SectionStationeryFrame tone="dark" className="max-w-[340px]">
+        <div className="relative mb-4 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setLang((l) => (l === 'en' ? 'dv' : 'en'))}
+            className="flex items-center gap-0 overflow-hidden rounded-full border border-gold/30 font-cinzel text-[7px] uppercase tracking-[2px]"
+            aria-label="Toggle language"
           >
-            EN
-          </span>
-          <span className="w-px h-4 bg-gold/20" />
-          <span
-            className={`px-3 py-1.5 transition-colors duration-200 font-sans text-[9px] ${
-              lang === 'dv' ? 'bg-gold/20 text-champagne' : 'text-gold/50'
-            }`}
-          >
-            ދިވެހި
-          </span>
-        </button>
-      </div>
+            <span
+              className={`px-3 py-1.5 transition-colors duration-200 ${
+                lang === 'en' ? 'bg-gold/20 text-champagne' : 'text-gold/50'
+              }`}
+            >
+              EN
+            </span>
+            <span className="h-4 w-px bg-gold/20" />
+            <span
+              className={`px-3 py-1.5 font-sans text-[9px] transition-colors duration-200 ${
+                lang === 'dv' ? 'bg-gold/20 text-champagne' : 'text-gold/50'
+              }`}
+            >
+              ދިވެހި
+            </span>
+          </button>
+        </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <span className="flex justify-center mb-4" aria-hidden>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="mb-4 flex justify-center" aria-hidden>
           <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Outer ring */}
             <circle cx="19" cy="19" r="17.5" stroke="#c9a96e" strokeWidth="0.7" opacity="0.5"/>
@@ -141,11 +143,12 @@ export default function PrivateNotice() {
           <p className="font-cormorant italic text-[12.5px] text-gold/80 leading-[1.9] relative">{c.body1}</p>
           <div className="w-10 h-px mx-auto my-3" style={{ background: 'rgba(201,169,110,0.25)' }} />
           <p className="font-cormorant italic text-[12.5px] text-gold/80 leading-[1.9] relative">{c.body2}</p>
-          <span className="inline-block border border-gold/30 text-champagne font-cinzel text-[9px] tracking-[3px] uppercase px-3.5 py-1.5 mt-3.5 relative">
+          <span className="relative mt-3.5 inline-block border border-gold/30 px-3.5 py-1.5 font-cinzel text-[9px] uppercase tracking-[3px] text-champagne">
             {c.badge}
           </span>
         </div>
-      </motion.div>
+        </motion.div>
+      </SectionStationeryFrame>
     </section>
   )
 }
