@@ -13,7 +13,8 @@ import RSVPSection from './RSVPSection'
 import AudioPlayer, { type AudioPlayerHandle } from './AudioPlayer'
 
 const LOADER_SRC = '/assets/loader.png'
-const CRITICAL_ASSETS = ['/assets/Z-y-logo.png', '/assets/front-page-bg.png']
+const LOADING_SEAL_SRC = '/assets/vax-seal.png'
+const CRITICAL_ASSETS = ['/assets/vax-seal.png', '/assets/Z-y-logo.png', '/assets/front-page-bg.png']
 
 export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' | '17:30' }) {
   const [phase, setPhase] = useState<'envelope' | 'open'>('envelope')
@@ -78,8 +79,22 @@ export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' |
               width={1080}
               height={1920}
               decoding="async"
-              className="h-full w-full object-cover object-center animate-hintPulse"
+              className="absolute inset-0 h-full w-full object-cover object-center animate-hintPulse"
             />
+            <div
+              className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center p-8"
+              aria-hidden
+            >
+              <img
+                src={LOADING_SEAL_SRC}
+                alt=""
+                width={512}
+                height={512}
+                decoding="async"
+                draggable={false}
+                className="w-[min(48vw,200px)] max-w-[220px] object-contain drop-shadow-[0_12px_40px_rgba(0,0,0,0.45),0_0_1px_rgba(201,169,110,0.4)]"
+              />
+            </div>
           </div>
         )}
 
