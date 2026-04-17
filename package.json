@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "assets:hero-mobile": "python3 scripts/generate-hero-mobile-bg.py"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",

@@ -1,6 +1,6 @@
 // components/HeroSection.tsx
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import HeroCandleFlames from './HeroCandleFlames'
 
@@ -8,7 +8,29 @@ const NAME1 = 'Ibrahim Zimam'
 const NAME2 = 'Yanal Ahmed'
 const CHAR_DELAY = 60
 
-const HERO_BG_SRC = '/assets/bg.png'
+const HERO_BG_DESKTOP = '/assets/bg.png'
+const HERO_BG_390 = '/assets/bg_mobile_390x844.png'
+const HERO_BG_430 = '/assets/bg_mobile_430x932.png'
+
+/** Larger phones / Pro Max class (~430×932). Checked first. */
+function is430PortraitViewport(width: number, height: number): boolean {
+  if (width < 412 || width > 438) return false
+  if (height < 880) return false
+  return true
+}
+
+/** Standard iPhone portrait class (~390×844, incl. 375–393 widths). */
+function is390PortraitViewport(width: number, height: number): boolean {
+  if (width < 360 || width > 411) return false
+  if (height < 760 || height > 920) return false
+  return true
+}
+
+function pickHeroBg(width: number, height: number): string {
+  if (is430PortraitViewport(width, height)) return HERO_BG_430
+  if (is390PortraitViewport(width, height)) return HERO_BG_390
+  return HERO_BG_DESKTOP
+}
 
 export default function HeroSection() {
   const [line1, setLine1] = useState('')
@@ -16,6 +38,18 @@ export default function HeroSection() {
   const [showCursor1, setShowCursor1] = useState(true)
   const [showCursor2, setShowCursor2] = useState(false)
   const [done, setDone] = useState(false)
+  const [heroBgSrc, setHeroBgSrc] = useState(HERO_BG_DESKTOP)
+
+  useLayoutEffect(() => {
+    const sync = () => {
+      const w = window.innerWidth
+      const h = window.innerHeight
+      setHeroBgSrc(pickHeroBg(w, h))
+    }
+    sync()
+    window.addEventListener('resize', sync)
+    return () => window.removeEventListener('resize', sync)
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -62,7 +96,7 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${HERO_BG_SRC})` }}
+          style={{ backgroundImage: `url(${heroBgSrc})` }}
         />
         <div
           className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(253,248,240,0.22)_0%,rgba(253,248,240,0.1)_48%,rgba(253,248,240,0.2)_100%)]"
