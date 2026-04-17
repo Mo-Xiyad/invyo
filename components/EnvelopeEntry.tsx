@@ -115,10 +115,10 @@ export default function EnvelopeEntry({ opening, onOpen }: Props) {
             <span
               className="absolute inset-[-6%] rounded-full opacity-90 blur-[1px]"
               aria-hidden
-              style={{
-                boxShadow:
-                  '0 18px 40px rgba(62,42,20,0.2), 0 2px 0 rgba(255,252,248,0.35) inset, 0 0 0 1px rgba(201,169,110,0.25)',
-              }}
+              // style={{
+              //   boxShadow:
+              //     '0 18px 40px rgba(62,42,20,0.2), 0 2px 0 rgba(255,252,248,0.35) inset, 0 0 0 1px rgba(201,169,110,0.25)',
+              // }}
             />
             <span className="flex -rotate-[2deg] animate-sealFloat items-center justify-center transition-transform duration-500 ease-out hover:rotate-0">
               <img
