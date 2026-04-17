@@ -1,39 +1,28 @@
 import SectionStationeryFrame from '@/components/SectionStationeryFrame'
 import { getRedis } from '@/lib/redis'
-import { RSVP_REDIS_KEY, eventLabel, routeLabel, type RsvpRecord } from '@/lib/rsvp'
+import { RSVP_REDIS_KEY, eventLabel, parseRsvpListEntry, routeLabel, type RsvpRecord } from '@/lib/rsvp'
 
 export const dynamic = 'force-dynamic'
 
-function parseRecord(raw: unknown): RsvpRecord | null {
-  if (typeof raw !== 'string') return null
-  try {
-    const o = JSON.parse(raw) as RsvpRecord
-    if (!o?.guestName || typeof o.guestName !== 'string') return null
-    if (o.event !== 'marriage_ceremony' && o.event !== 'wedding') return null
-    if (o.route !== 'family' && o.route !== 'friends') return null
-    if (typeof o.plusOne !== 'boolean') return null
-    if (!o.submittedAt) return null
-    return o
-  } catch {
-    return null
-  }
-}
-
-async function loadEntries(): Promise<RsvpRecord[]> {
+async function loadEntries(): Promise<{ entries: RsvpRecord[]; loadError: string | null }> {
   if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    return []
+    return { entries: [], loadError: null }
   }
   try {
     const redis = getRedis()
     const rows = await redis.lrange(RSVP_REDIS_KEY, 0, 499)
     const out: RsvpRecord[] = []
     for (const r of rows) {
-      const p = parseRecord(r)
+      const p = parseRsvpListEntry(r)
       if (p) out.push(p)
     }
-    return out
-  } catch {
-    return []
+    return { entries: out, loadError: null }
+  } catch (e) {
+    console.error('[logistics] redis lrange failed', e)
+    return {
+      entries: [],
+      loadError: 'Could not load RSVPs from Redis. Check credentials and logs.',
+    }
   }
 }
 
@@ -59,7 +48,7 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
 }
 
 export default async function LogisticsPage() {
-  const entries = await loadEntries()
+  const { entries, loadError } = await loadEntries()
   const configured = Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
 
   let family = 0
@@ -90,6 +79,12 @@ export default async function LogisticsPage() {
           <p className="mb-6 rounded-sm border border-gold/30 bg-sand px-4 py-3 text-center font-cinzel text-[12px] text-ink">
             Redis is not configured. Set <code className="text-gold-deep">UPSTASH_REDIS_REST_URL</code> and{' '}
             <code className="text-gold-deep">UPSTASH_REDIS_REST_TOKEN</code> in the environment.
+          </p>
+        )}
+
+        {loadError && (
+          <p className="mb-6 rounded-sm border border-red-900/25 bg-red-50/90 px-4 py-3 text-center font-cinzel text-[12px] text-red-900/90">
+            {loadError}
           </p>
         )}
 

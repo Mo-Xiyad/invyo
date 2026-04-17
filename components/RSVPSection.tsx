@@ -6,8 +6,8 @@ import SectionStationeryFrame from './SectionStationeryFrame'
 import OrnamentDivider from './OrnamentDivider'
 import { eventLabel, routeLabel, type InviteRoute, type RsvpEvent } from '@/lib/rsvp'
 
-const WA_NUMBER = '9609697543'
-
+// const WA_NUMBER = '9609697543'
+const WA_NUMBER = '21696482475'
 type GuestChoice = 'solo' | 'plusone'
 
 function buildWhatsAppHref(params: {
@@ -34,7 +34,6 @@ export default function RSVPSection({ inviteRoute }: { inviteRoute: InviteRoute 
   const dialogLabelId = useId()
   const [sheetOpen, setSheetOpen] = useState(false)
   const [guestName, setGuestName] = useState('')
-  const [rsvpEvent, setRsvpEvent] = useState<RsvpEvent>('marriage_ceremony')
   const [guestChoice, setGuestChoice] = useState<GuestChoice | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -42,7 +41,6 @@ export default function RSVPSection({ inviteRoute }: { inviteRoute: InviteRoute 
   const closeSheet = useCallback(() => {
     setSheetOpen(false)
     setGuestName('')
-    setRsvpEvent('marriage_ceremony')
     setGuestChoice(null)
     setSubmitError(null)
     setSubmitting(false)
@@ -68,38 +66,55 @@ export default function RSVPSection({ inviteRoute }: { inviteRoute: InviteRoute 
 
   const canSubmit = guestName.trim().length > 0 && guestChoice !== null && !submitting
 
-  const handleSubmit = async () => {
-    if (!guestChoice) return
+  /**
+   * Open a tab synchronously on click (popup-safe), save RSVP, then point that tab at WhatsApp.
+   * `window.open` after `await fetch` is often blocked; this keeps save-first order and reliable WA.
+   */
+  const handleRsvpClick = () => {
+    if (!guestChoice || !guestName.trim() || submitting) return
+
     setSubmitError(null)
     setSubmitting(true)
-    try {
-      const res = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+
+    const waTab = typeof window !== 'undefined' ? window.open('about:blank', '_blank') : null
+
+    void (async () => {
+      try {
+        const res = await fetch('/api/rsvp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            guestName: guestName.trim(),
+            event: 'marriage_ceremony' satisfies RsvpEvent,
+            plusOne: guestChoice === 'plusone',
+            route: inviteRoute,
+          }),
+        })
+        const data = (await res.json().catch(() => ({}))) as { error?: string }
+        if (!res.ok) {
+          throw new Error(data.error || 'Could not save RSVP')
+        }
+
+        const href = buildWhatsAppHref({
           guestName: guestName.trim(),
-          event: rsvpEvent,
+          event: 'marriage_ceremony',
           plusOne: guestChoice === 'plusone',
           route: inviteRoute,
-        }),
-      })
-      const data = (await res.json().catch(() => ({}))) as { error?: string }
-      if (!res.ok) {
-        throw new Error(data.error || 'Could not save RSVP')
+        })
+
+        if (waTab && !waTab.closed) {
+          waTab.location.href = href
+        } else {
+          window.location.href = href
+        }
+        closeSheet()
+      } catch (e) {
+        waTab?.close()
+        setSubmitError(e instanceof Error ? e.message : 'Something went wrong')
+      } finally {
+        setSubmitting(false)
       }
-      const href = buildWhatsAppHref({
-        guestName: guestName.trim(),
-        event: rsvpEvent,
-        plusOne: guestChoice === 'plusone',
-        route: inviteRoute,
-      })
-      window.open(href, '_blank', 'noopener,noreferrer')
-      closeSheet()
-    } catch (e) {
-      setSubmitError(e instanceof Error ? e.message : 'Something went wrong')
-    } finally {
-      setSubmitting(false)
-    }
+    })()
   }
 
   return (
@@ -199,34 +214,6 @@ export default function RSVPSection({ inviteRoute }: { inviteRoute: InviteRoute 
                   className="mb-4 w-full rounded-sm border border-gold/25 bg-parchment px-3 py-2.5 font-cinzel text-[13px] text-ink outline-none ring-gold/30 placeholder:text-muted/60 focus:border-gold/50 focus:ring-1"
                 />
 
-                <p className="mb-2 text-left font-cinzel text-[9px] uppercase tracking-[2px] text-muted">Event</p>
-                <div className="mb-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  <button
-                    type="button"
-                    onClick={() => setRsvpEvent('marriage_ceremony')}
-                    className={`rounded-sm border px-3 py-3 text-left transition-[border-color,box-shadow,background] duration-200 ${
-                      rsvpEvent === 'marriage_ceremony'
-                        ? 'border-gold bg-[rgba(201,169,110,0.12)] shadow-[inset_0_0_0_1px_rgba(201,169,110,0.35)]'
-                        : 'border-gold/20 bg-parchment hover:border-gold/40'
-                    }`}
-                  >
-                    <p className="font-cinzel text-[10px] uppercase tracking-[2.5px] text-gold">Ceremony</p>
-                    <p className="mt-1 font-cinzel text-[12px] text-ink leading-tight">Marriage ceremony</p>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setRsvpEvent('wedding')}
-                    className={`rounded-sm border px-3 py-3 text-left transition-[border-color,box-shadow,background] duration-200 ${
-                      rsvpEvent === 'wedding'
-                        ? 'border-gold bg-[rgba(201,169,110,0.12)] shadow-[inset_0_0_0_1px_rgba(201,169,110,0.35)]'
-                        : 'border-gold/20 bg-parchment hover:border-gold/40'
-                    }`}
-                  >
-                    <p className="font-cinzel text-[10px] uppercase tracking-[2.5px] text-gold">Celebration</p>
-                    <p className="mt-1 font-cinzel text-[12px] text-ink leading-tight">Wedding</p>
-                  </button>
-                </div>
-
                 <p className="mb-2 text-left font-cinzel text-[9px] uppercase tracking-[2px] text-muted">Guest count</p>
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                   <button
@@ -267,7 +254,7 @@ export default function RSVPSection({ inviteRoute }: { inviteRoute: InviteRoute 
                   <button
                     type="button"
                     disabled={!canSubmit}
-                    onClick={() => void handleSubmit()}
+                    onClick={handleRsvpClick}
                     aria-label="Save RSVP and open WhatsApp"
                     className="flex w-full items-center justify-center rounded-sm border border-gold/50 bg-espresso py-3.5 font-cinzel text-[10px] font-medium uppercase tracking-[0.22em] text-champagne shadow-[0_8px_22px_rgba(42,24,8,0.28)] transition-[transform,opacity] enabled:active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-45"
                   >
