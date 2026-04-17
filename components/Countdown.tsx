@@ -52,7 +52,7 @@ export default function Countdown({ arrivalTime }: { arrivalTime: string }) {
         {units.map((u, i) => (
           <div key={u.label} className="flex items-start">
             <div className="text-center min-w-[44px]">
-              <span className="font-cormorant font-light text-[38px] text-champagne leading-none block tabular-nums">
+              <span className="font-cinzel font-light text-[38px] text-champagne leading-none block tabular-nums">
                 {fmt(u.value)}
               </span>
               <span className="font-cinzel text-[6.5px] tracking-[2px] text-[#6a4a2a] uppercase mt-1 block">

@@ -28,7 +28,7 @@ export default function DressCode() {
   return (
     <section className="bg-sand px-5 py-9">
       <motion.h2
-        className="font-cormorant font-light text-[28px] text-ink text-center mb-1"
+        className="font-cinzel font-light text-[28px] text-ink text-center mb-1"
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -36,7 +36,7 @@ export default function DressCode() {
       >
         Dress Code
       </motion.h2>
-      <p className="font-cormorant italic text-[12px] text-muted text-center mb-5">Tap a card to see details</p>
+      <p className="font-cinzel italic text-[12px] text-muted text-center mb-5">Tap a card to see details</p>
 
       <div className="flex gap-3">
         {cards.map((card, i) => (
@@ -63,7 +63,7 @@ export default function DressCode() {
                 ) : null}
               </div>
               <p className="font-cinzel text-[7px] tracking-[3px] text-muted uppercase mb-1">{card.role}</p>
-              <p className="font-cormorant italic text-[13px] text-ink leading-tight">{card.name}</p>
+              <p className="font-cinzel italic text-[13px] text-ink leading-tight">{card.name}</p>
               <p className="font-cinzel text-[6.5px] tracking-[2px] text-gold mt-1.5 uppercase opacity-70">Tap ✦</p>
             </div>
             <div
@@ -71,7 +71,7 @@ export default function DressCode() {
                 flipped[i] ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              <p className="font-cormorant italic text-[12px] text-champagne leading-relaxed text-center">
+              <p className="font-cinzel italic text-[12px] text-champagne leading-relaxed text-center">
                 {card.detail}
               </p>
             </div>

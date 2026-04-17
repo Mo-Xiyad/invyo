@@ -14,9 +14,11 @@ export default function RSVPSection() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <p className="font-cinzel text-[7.5px] tracking-[5px] text-gold uppercase mb-2">RSVP</p>
-        <h2 className="font-cinzel text-[32px] text-ink mb-2">Will you join us?</h2>
-        <p className="font-cormorant italic text-[12px] text-muted leading-relaxed mb-6">
+        <p className="font-cinzel text-[7.5px] tracking-[5px] text-gold uppercase mb-2 font-medium">
+          RSVP
+        </p>
+        <h2 className="font-cinzel font-light text-[32px] text-ink mb-2">Will you join us?</h2>
+        <p className="font-cinzel italic text-[12px] text-muted leading-relaxed mb-6">
           Please let us know if
           <br />
           you&apos;ll be attending.
@@ -26,7 +28,7 @@ export default function RSVPSection() {
           href={WA_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center mx-auto mb-3 font-cinzel text-[11px] tracking-[6px] uppercase text-champagne rounded-sm animate-rsvpPulse"
+          className="flex items-center justify-center mx-auto mb-3 font-cinzel text-[11px] font-medium tracking-[6px] uppercase text-champagne rounded-sm animate-rsvpPulse"
           style={{
             background: '#2a1808',
             border: '1px solid rgba(201,169,110,0.35)',
@@ -37,11 +39,11 @@ export default function RSVPSection() {
           RSVP
         </a>
 
-        <p className="font-cormorant italic text-[11px] text-[#b09070]">Kindly reply by 1st May 2026</p>
+        <p className="font-cinzel italic text-[11px] text-[#b09070]">Kindly reply by 1st May 2026</p>
       </motion.div>
 
       <div className="mt-10">
-        <p className="font-cinzel text-[20px] text-gold">With love, Zimam &amp; Yanal</p>
+        <p className="font-cinzel italic text-[20px] text-gold">With love, Zimam &amp; Yanal</p>
       </div>
     </section>
   )

@@ -22,7 +22,7 @@ A client requires a digital, mobile-first marriage ceremony invitation to be sha
 | Family arrival | 16:30 |
 | Friends arrival | 17:30 |
 | Event ends | 19:30 |
-| Dress — Women | Satin Champagne |
+| Dress — Women | Champagne Gold |
 | Dress — Men | White & Navy Blue trousers |
 | RSVP number | +46724551114 (WhatsApp) |
 | RSVP deadline | 1st May 2026 |
@@ -147,7 +147,7 @@ Seven sections, described below.
 
 ### § 4 Dress Code
 - Sand background
-- Two tappable cards: Women (Satin Champagne swatch) and Men (half-white / half-navy swatch)
+- Two tappable cards: Women (Champagne Gold swatch) and Men (half-white / half-navy swatch)
 - Tap flips the card to reveal a short description (CSS opacity transition, dark espresso back face)
 - "Tap ✦" micro-label hints interaction
 

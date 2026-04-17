@@ -1160,9 +1160,9 @@ import { motion } from 'framer-motion'
 const cards = [
   {
     role: 'Women',
-    name: 'Satin Champagne',
+    name: 'Champagne Gold',
     swatchStyle: { background: 'linear-gradient(145deg, #f5e6c8, #d4b896)' },
-    detail: 'Floor-length gown in satin champagne or ivory. Elegant and formal.',
+    detail: 'Floor-length gown in champagne gold or ivory. Elegant and formal.',
   },
   {
     role: 'Men',

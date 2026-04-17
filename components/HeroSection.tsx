@@ -186,7 +186,7 @@ export default function HeroSection() {
           transition={{ delay: 0.2, duration: 0.6 }}
         >
           <p className="font-cinzel text-[10px] tracking-[3px] text-[#5a3a1a] mb-1">8th May · MMXXVI</p>
-          <p className="font-cormorant italic text-[13px] text-muted">Pavilion by Gold, Maldives</p>
+          <p className="font-cinzel italic text-[13px] text-muted">Pavilion by Gold, Maldives</p>
         </motion.div>
       )}
 
@@ -194,7 +194,7 @@ export default function HeroSection() {
 
       {done && (
         <motion.div
-          className="pointer-events-none absolute inset-x-0 bottom-6 z-[2] flex justify-center px-5 pb-[max(1.35rem,env(safe-area-inset-bottom,0px))] pt-3"
+          className="pointer-events-none absolute inset-x-0 bottom-12 z-[2] flex justify-center px-5 pb-[max(1.35rem,env(safe-area-inset-bottom,0px))] pt-3"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 0.55 }}

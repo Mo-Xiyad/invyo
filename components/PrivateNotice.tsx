@@ -145,13 +145,13 @@ export default function PrivateNotice() {
         </h2>
         <div dir={c.dir}>
           <p
-            className={`italic text-[12.5px] text-gold/80 leading-[1.9] relative ${lang === 'dv' ? 'font-amiri' : 'font-cormorant'}`}
+            className={`italic text-[12.5px] text-gold/80 leading-[1.9] relative ${lang === 'dv' ? 'font-amiri' : 'font-cinzel'}`}
           >
             {c.body1}
           </p>
           <div className="w-10 h-px mx-auto my-3" style={{ background: 'rgba(201,169,110,0.25)' }} />
           <p
-            className={`italic text-[12.5px] text-gold/80 leading-[1.9] relative ${lang === 'dv' ? 'font-amiri' : 'font-cormorant'}`}
+            className={`italic text-[12.5px] text-gold/80 leading-[1.9] relative ${lang === 'dv' ? 'font-amiri' : 'font-cinzel'}`}
           >
             {c.body2}
           </p>

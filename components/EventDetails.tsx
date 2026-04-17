@@ -19,7 +19,7 @@ export default function EventDetails({ arrivalTime }: { arrivalTime: string }) {
     <section className="bg-parchment px-6 py-10">
       <SectionStationeryFrame>
         <motion.h2
-          className="font-cormorant font-light text-[28px] text-ink text-center mb-1"
+          className="font-cinzel font-light text-[28px] text-ink text-center mb-1"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
@@ -28,7 +28,7 @@ export default function EventDetails({ arrivalTime }: { arrivalTime: string }) {
           Event Details
         </motion.h2>
         <motion.p
-          className="font-cormorant italic text-[13px] text-muted text-center mb-6"
+          className="font-cinzel italic text-[13px] text-muted text-center mb-6"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
@@ -56,7 +56,7 @@ export default function EventDetails({ arrivalTime }: { arrivalTime: string }) {
               <span className="mt-0.5 w-4 shrink-0 text-center text-[12px] text-gold">{row.glyph}</span>
               <div>
                 <p className="mb-0.5 font-cinzel text-[7px] uppercase tracking-[2.5px] text-muted">{row.label}</p>
-                <p className="font-cormorant text-[15px] italic text-ink">{row.value}</p>
+                <p className="font-cinzel text-[15px] italic text-ink">{row.value}</p>
                 {row.pill && (
                   <span className="mt-1 inline-block rounded-full bg-espresso px-2 py-0.5 font-cinzel text-[7.5px] tracking-[1.5px] text-champagne">
                     {row.pill}

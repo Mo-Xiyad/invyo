@@ -14,7 +14,7 @@ export default function VenueMap() {
     <section className="bg-parchment px-5 py-9">
       <SectionStationeryFrame className="max-w-[340px]">
         <motion.h2
-          className="font-cormorant font-light text-[28px] text-ink text-center mb-1"
+          className="font-cinzel font-light text-[28px] text-ink text-center mb-1"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -23,7 +23,7 @@ export default function VenueMap() {
           The Venue
         </motion.h2>
         <p className="font-cinzel text-[26px] text-ink text-center mb-1">Pavilion by Gold</p>
-        <p className="mb-4 text-center font-cormorant text-[12px] italic leading-relaxed text-muted">
+        <p className="mb-4 text-center font-cinzel text-[12px] italic leading-relaxed text-muted">
           Mafannu, Malé
           <br />
           Maldives

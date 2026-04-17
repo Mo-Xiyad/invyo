@@ -26,8 +26,10 @@ const amiri = Amiri({
   variable: '--amiri',
   display: 'swap',
 })
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://invyo.uk'
-const previewImage = '/assets/Z-y-logo.png'
+/** Base URL for OG tags; must match the deployed origin so WhatsApp/Viber unfurl the image. */
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://invyo.uk').replace(/\/$/, '')
+/** Z & Y monogram — client requirement: link previews in WhatsApp/Viber show their initials. */
+const previewImage = new URL('/assets/Z-y-logo.png', `${siteUrl}/`).href
 const teaserTitle = 'Celebrating Love, Joy, and Togetherness'
 const teaserDescription = 'Ibrahim Zimam & Yanal Ahmed invite you to share in a beautiful celebration of their union.'
 
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
   title: 'Ibrahim Zimam & Yanal Ahmed — Marriage Ceremony',
   description: 'You are invited.',
   robots: { index: false, follow: false },
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(`${siteUrl}/`),
   openGraph: {
     title: teaserTitle,
     description: teaserDescription,
@@ -44,9 +46,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: previewImage,
-        width: 512,
-        height: 512,
-        alt: 'Ibrahim Zimam and Yanal Ahmed invitation monogram',
+        width: 1024,
+        height: 1024,
+        alt: 'Z & Y — Ibrahim Zimam and Yanal Ahmed invitation monogram',
       },
     ],
     type: 'website',
@@ -69,7 +71,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${playfair.variable} ${lato.variable} ${amiri.variable}`}>
-      <body suppressHydrationWarning className="font-cormorant antialiased">
+      <body suppressHydrationWarning className="font-cinzel antialiased">
         {children}
       </body>
     </html>
