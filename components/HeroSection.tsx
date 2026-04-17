@@ -127,7 +127,7 @@ export default function HeroSection() {
 
       <div className="relative z-[2] flex min-h-0 flex-1 flex-col justify-center px-5 pt-[max(2rem,env(safe-area-inset-top,0px))] pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] translate-y-[min(5vh,2rem)]">
       <motion.p
-        className="font-cinzel text-[7px] tracking-[6px] text-gold uppercase mb-5 relative"
+        className="font-cinzel text-[9px] sm:text-[10px] tracking-[3px] text-muted uppercase mb-5 relative"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.8 }}
