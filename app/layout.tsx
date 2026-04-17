@@ -1,21 +1,29 @@
 import type { Metadata, Viewport } from 'next'
-import { Cinzel, Cormorant_Garamond } from 'next/font/google'
+import { Amiri, Lato, Playfair_Display } from 'next/font/google'
 import './globals.css'
 
-// Note: variable names here must match what globals.css @theme references:
-//   --cinzel, --cormorant
-const cinzel = Cinzel({
+// Match randa-mohamed-s-day: Playfair (display), Lato (body), Amiri (RTL / Dhivehi).
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '600'],
-  variable: '--cinzel',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--playfair',
   display: 'swap',
 })
 
-const cormorant = Cormorant_Garamond({
+const lato = Lato({
   subsets: ['latin'],
-  weight: ['300', '400'],
+  weight: ['300', '400', '700'],
   style: ['normal', 'italic'],
-  variable: '--cormorant',
+  variable: '--lato',
+  display: 'swap',
+})
+
+const amiri = Amiri({
+  subsets: ['latin', 'arabic'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  variable: '--amiri',
   display: 'swap',
 })
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://invyo.uk'
@@ -60,8 +68,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${cormorant.variable}`}>
-      <body suppressHydrationWarning>{children}</body>
+    <html lang="en" className={`${playfair.variable} ${lato.variable} ${amiri.variable}`}>
+      <body suppressHydrationWarning className="font-cormorant antialiased">
+        {children}
+      </body>
     </html>
   )
 }

@@ -92,7 +92,7 @@ export default function PrivateNotice() {
             </span>
             <span className="h-4 w-px bg-gold/20" />
             <span
-              className={`px-3 py-1.5 font-sans text-[9px] transition-colors duration-200 ${
+              className={`px-3 py-1.5 font-amiri text-[9px] transition-colors duration-200 ${
                 lang === 'dv' ? 'bg-gold/20 text-champagne' : 'text-gold/50'
               }`}
             >
@@ -138,12 +138,26 @@ export default function PrivateNotice() {
             <circle cx="36" cy="19" r="0.9" fill="#c9a96e" opacity="0.6"/>
           </svg>
         </span>
-        <h2 className="font-cinzel text-[24px] text-champagne mb-3 relative">{c.heading}</h2>
+        <h2
+          className={`text-[24px] text-champagne mb-3 relative ${lang === 'dv' ? 'font-amiri' : 'font-cinzel'}`}
+        >
+          {c.heading}
+        </h2>
         <div dir={c.dir}>
-          <p className="font-cormorant italic text-[12.5px] text-gold/80 leading-[1.9] relative">{c.body1}</p>
+          <p
+            className={`italic text-[12.5px] text-gold/80 leading-[1.9] relative ${lang === 'dv' ? 'font-amiri' : 'font-cormorant'}`}
+          >
+            {c.body1}
+          </p>
           <div className="w-10 h-px mx-auto my-3" style={{ background: 'rgba(201,169,110,0.25)' }} />
-          <p className="font-cormorant italic text-[12.5px] text-gold/80 leading-[1.9] relative">{c.body2}</p>
-          <span className="relative mt-3.5 inline-block border border-gold/30 px-3.5 py-1.5 font-cinzel text-[9px] uppercase tracking-[3px] text-champagne">
+          <p
+            className={`italic text-[12.5px] text-gold/80 leading-[1.9] relative ${lang === 'dv' ? 'font-amiri' : 'font-cormorant'}`}
+          >
+            {c.body2}
+          </p>
+          <span
+            className={`relative mt-3.5 inline-block border border-gold/30 px-3.5 py-1.5 text-[9px] uppercase tracking-[3px] text-champagne ${lang === 'dv' ? 'font-amiri normal-case tracking-normal' : 'font-cinzel'}`}
+          >
             {c.badge}
           </span>
         </div>

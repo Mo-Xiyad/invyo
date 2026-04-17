@@ -12,7 +12,6 @@ import PrivateNotice from './PrivateNotice'
 import RSVPSection from './RSVPSection'
 import AudioPlayer, { type AudioPlayerHandle } from './AudioPlayer'
 
-const LOADER_SRC = '/assets/loader.png'
 const LOADING_SEAL_SRC = '/assets/vax-seal.png'
 const CRITICAL_ASSETS = ['/assets/vax-seal.png', '/assets/Z-y-logo.png', '/assets/front-page-bg.png']
 
@@ -73,14 +72,6 @@ export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' |
       <div className="relative min-h-dvh w-full max-w-[430px]">
         {loading && (
           <div className="absolute inset-0 z-[80] h-dvh w-full overflow-hidden bg-[#0d0a07]">
-            <img
-              src={LOADER_SRC}
-              alt="Loading invitation"
-              width={1080}
-              height={1920}
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-center animate-hintPulse"
-            />
             <div
               className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center p-8"
               aria-hidden

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ── FONT CSS VARIABLES (set by next/font on <html>) ─────────────── */
-/* next/font injects: --cinzel and --cormorant onto <html> class */
+/* next/font injects: --playfair, --lato, --amiri onto <html> class */
 
 /* ── DESIGN TOKENS ────────────────────────────────────────────────── */
 @theme {
@@ -16,10 +16,14 @@
   --color-ink:          #2a1808;
   --color-muted:        #9a7d5a;
 
-  /* Fonts — these reference CSS vars set by next/font on <html> */
-  --font-cinzel:    var(--cinzel), serif;
-  --font-cormorant: var(--cormorant), serif;
-  --font-vibes:     var(--cinzel), serif;
+  /* Fonts — same stack as randa-mohamed-s-day (Playfair + Lato + Amiri) */
+  --font-sans:      var(--lato), ui-sans-serif, system-ui, sans-serif;
+  --font-serif:     var(--playfair), ui-serif, Georgia, serif;
+  --font-mono:      var(--lato), ui-monospace, monospace;
+  --font-cinzel:    var(--playfair), ui-serif, Georgia, serif;
+  --font-cormorant: var(--lato), ui-sans-serif, system-ui, sans-serif;
+  --font-vibes:     var(--playfair), ui-serif, Georgia, serif;
+  --font-amiri:     var(--amiri), serif;
 
   /* Animations */
   --animate-sealFloat: sealFloat 4s ease-in-out infinite;
@@ -130,11 +134,20 @@
   html {
     -webkit-tap-highlight-color: transparent;
     background-color: #0d0a07;
+    font-family: var(--lato), system-ui, sans-serif;
   }
   body {
     background-color: var(--color-champagne);
     color: var(--color-ink);
-    font-family: var(--cormorant), Georgia, serif;
+    font-family: inherit;
+  }
+
+  /* UA styles often use system UI on controls; inherit so Lato/Playfair stack applies site-wide */
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
   }
 }
 
