@@ -9,7 +9,7 @@ const cards = [
     name: 'Champagne Gold',
     swatchStyle: { background: 'linear-gradient(145deg, #f5e6c8, #d4b896)' },
     swatchImage: '/assets/dress-code-w.jpeg',
-    detail: 'Floor-length gown in champagne gold or ivory. Elegant and formal.',
+    detail: 'Floor-length gown in champagne gold. Elegant and formal.',
   },
   {
     role: 'Men',
