@@ -26,10 +26,16 @@ const amiri = Amiri({
   variable: '--amiri',
   display: 'swap',
 })
-/** Base URL for OG tags; must match the deployed origin so WhatsApp/Viber unfurl the image. */
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://invyo.uk').replace(/\/$/, '')
-/** Z & Y monogram — client requirement: link previews in WhatsApp/Viber show their initials. */
-const previewImage = new URL('/assets/Z-y-logo.png', `${siteUrl}/`).href
+/** Canonical origin for OG / metadataBase. WhatsApp must be able to fetch og:image from this host. */
+function siteOrigin(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, '')
+  if (fromEnv) return fromEnv
+  const vercel = process.env.VERCEL_URL?.trim()
+  if (vercel) return `https://${vercel.replace(/^https?:\/\//, '')}`
+  return 'https://invyo.uk'
+}
+
+const siteUrl = siteOrigin()
 const teaserTitle = 'Celebrating Love, Joy, and Togetherness'
 const teaserDescription = 'Ibrahim Zimam & Yanal Ahmed invite you to share in a beautiful celebration of their union.'
 
@@ -41,23 +47,15 @@ export const metadata: Metadata = {
   openGraph: {
     title: teaserTitle,
     description: teaserDescription,
-    url: siteUrl,
+    url: `${siteUrl}/`,
     siteName: 'Ibrahim & Yanal Invitation',
-    images: [
-      {
-        url: previewImage,
-        width: 1024,
-        height: 1024,
-        alt: 'Z & Y — Ibrahim Zimam and Yanal Ahmed invitation monogram',
-      },
-    ],
     type: 'website',
+    // og:image comes from `app/opengraph-image.tsx` (stable route for WhatsApp / Meta crawlers)
   },
   twitter: {
     card: 'summary',
     title: teaserTitle,
     description: teaserDescription,
-    images: [previewImage],
   },
 }
 
