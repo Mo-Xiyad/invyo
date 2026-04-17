@@ -84,12 +84,12 @@ export default function HeroSection() {
       />
 
       {/* Live flames over the three candles in bg.png — same SVG motion as Candelabra */}
-      <div
+      {/* <div
         // className="pointer-events-none absolute left-1/2 z-[2] w-[min(92%,420px)] -translate-x-1/2 top-[max(3.25rem,min(11dvh,104px))]"
         aria-hidden
       >
         <HeroCandleFlames className="mx-auto h-auto w-full max-h-[min(14dvh,88px)] opacity-[0.94]" />
-      </div>
+      </div> */}
 
       <div className="relative z-[2] flex min-h-0 flex-1 flex-col justify-center px-5 pt-[max(2rem,env(safe-area-inset-top,0px))] pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] translate-y-[min(5vh,2rem)]">
       <motion.p
@@ -102,7 +102,7 @@ export default function HeroSection() {
       </motion.p>
 
       <div className="relative">
-        <p className="font-vibes text-[34px] text-ink leading-tight">
+        <p className="font-cinzel text-[34px] text-ink leading-tight">
           {line1}
           {showCursor1 && (
             <span className="inline-block w-[2px] h-[0.9em] bg-gold ml-[1px] align-middle animate-blink" />
@@ -110,7 +110,7 @@ export default function HeroSection() {
         </p>
 
         <motion.p
-          className="font-vibes text-[26px] text-gold my-1"
+          className="font-cinzel text-[26px] text-gold my-1"
           initial={{ opacity: 0 }}
           animate={{ opacity: line1.length === NAME1.length ? 1 : 0 }}
           transition={{ duration: 0.4 }}
@@ -118,7 +118,7 @@ export default function HeroSection() {
           &amp;
         </motion.p>
 
-        <p className="font-vibes text-[34px] text-ink leading-tight">
+        <p className="font-cinzel text-[34px] text-ink leading-tight">
           {line2}
           {showCursor2 && (
             <span className="inline-block w-[2px] h-[0.9em] bg-gold ml-[1px] align-middle animate-blink" />

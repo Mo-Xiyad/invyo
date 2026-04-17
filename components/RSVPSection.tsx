@@ -15,7 +15,7 @@ export default function RSVPSection() {
         transition={{ duration: 0.6 }}
       >
         <p className="font-cinzel text-[7.5px] tracking-[5px] text-gold uppercase mb-2">RSVP</p>
-        <h2 className="font-vibes text-[32px] text-ink mb-2">Will you join us?</h2>
+        <h2 className="font-cinzel text-[32px] text-ink mb-2">Will you join us?</h2>
         <p className="font-cormorant italic text-[12px] text-muted leading-relaxed mb-6">
           Please let us know if
           <br />
@@ -41,7 +41,7 @@ export default function RSVPSection() {
       </motion.div>
 
       <div className="mt-10">
-        <p className="font-vibes text-[20px] text-gold">With love, Zimam &amp; Yanal</p>
+        <p className="font-cinzel text-[20px] text-gold">With love, Zimam &amp; Yanal</p>
       </div>
     </section>
   )

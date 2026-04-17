@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next'
-import { Cinzel, Cormorant_Garamond, Great_Vibes } from 'next/font/google'
+import { Cinzel, Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 
 // Note: variable names here must match what globals.css @theme references:
-//   --cinzel, --cormorant, --vibes
+//   --cinzel, --cormorant
 const cinzel = Cinzel({
   subsets: ['latin'],
   weight: ['400', '600'],
@@ -18,14 +18,6 @@ const cormorant = Cormorant_Garamond({
   variable: '--cormorant',
   display: 'swap',
 })
-
-const vibes = Great_Vibes({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--vibes',
-  display: 'swap',
-})
-
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://invyo.uk'
 const previewImage = '/assets/Z-y-logo.png'
 const teaserTitle = 'Celebrating Love, Joy, and Togetherness'
@@ -68,7 +60,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${cormorant.variable} ${vibes.variable}`}>
+    <html lang="en" className={`${cinzel.variable} ${cormorant.variable}`}>
       <body suppressHydrationWarning>{children}</body>
     </html>
   )

@@ -43,7 +43,7 @@ export default function Countdown({ arrivalTime }: { arrivalTime: string }) {
         }}
       />
 
-      <p className="font-vibes text-gold text-[22px] relative">Countdown</p>
+      <p className="font-cinzel text-gold text-[22px] relative">Countdown</p>
       <p className="font-cinzel text-[7px] tracking-[4px] text-[#6a4a2a] uppercase mb-5 relative">
         Until 8th May 2026
       </p>

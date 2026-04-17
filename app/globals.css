@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ── FONT CSS VARIABLES (set by next/font on <html>) ─────────────── */
-/* next/font injects: --cinzel, --cormorant, --vibes onto <html> class */
+/* next/font injects: --cinzel and --cormorant onto <html> class */
 
 /* ── DESIGN TOKENS ────────────────────────────────────────────────── */
 @theme {
@@ -19,7 +19,7 @@
   /* Fonts — these reference CSS vars set by next/font on <html> */
   --font-cinzel:    var(--cinzel), serif;
   --font-cormorant: var(--cormorant), serif;
-  --font-vibes:     var(--vibes), cursive;
+  --font-vibes:     var(--cinzel), serif;
 
   /* Animations */
   --animate-sealFloat: sealFloat 4s ease-in-out infinite;

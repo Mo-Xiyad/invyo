@@ -6,9 +6,10 @@ import { motion } from 'framer-motion'
 const cards = [
   {
     role: 'Women',
-    name: 'Satin Champagne',
+    name: 'Champagne Gold',
     swatchStyle: { background: 'linear-gradient(145deg, #f5e6c8, #d4b896)' },
-    detail: 'Floor-length gown in satin champagne or ivory. Elegant and formal.',
+    swatchImage: '/assets/dress-code-w.jpeg',
+    detail: 'Floor-length gown in champagne gold or ivory. Elegant and formal.',
   },
   {
     role: 'Men',
@@ -50,7 +51,17 @@ export default function DressCode() {
                 flipped[i] ? 'opacity-0' : 'opacity-100'
               }`}
             >
-              <div className="w-11 h-11 rounded-full mb-2.5 shadow-md" style={card.swatchStyle} />
+              <div className="relative h-11 w-11 overflow-hidden rounded-full mb-2.5 shadow-md" style={card.swatchStyle}>
+                {card.swatchImage ? (
+                  <img
+                    src={card.swatchImage}
+                    alt={`${card.role} dress code sample`}
+                    className="h-full w-full object-cover"
+                    decoding="async"
+                    draggable={false}
+                  />
+                ) : null}
+              </div>
               <p className="font-cinzel text-[7px] tracking-[3px] text-muted uppercase mb-1">{card.role}</p>
               <p className="font-cormorant italic text-[13px] text-ink leading-tight">{card.name}</p>
               <p className="font-cinzel text-[6.5px] tracking-[2px] text-gold mt-1.5 uppercase opacity-70">Tap ✦</p>

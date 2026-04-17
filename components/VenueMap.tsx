@@ -22,7 +22,7 @@ export default function VenueMap() {
         >
           The Venue
         </motion.h2>
-        <p className="font-vibes text-[26px] text-ink text-center mb-1">Pavilion by Gold</p>
+        <p className="font-cinzel text-[26px] text-ink text-center mb-1">Pavilion by Gold</p>
         <p className="mb-4 text-center font-cormorant text-[12px] italic leading-relaxed text-muted">
           Mafannu, Malé
           <br />

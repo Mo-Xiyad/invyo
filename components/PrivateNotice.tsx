@@ -138,7 +138,7 @@ export default function PrivateNotice() {
             <circle cx="36" cy="19" r="0.9" fill="#c9a96e" opacity="0.6"/>
           </svg>
         </span>
-        <h2 className="font-vibes text-[24px] text-champagne mb-3 relative">{c.heading}</h2>
+        <h2 className="font-cinzel text-[24px] text-champagne mb-3 relative">{c.heading}</h2>
         <div dir={c.dir}>
           <p className="font-cormorant italic text-[12.5px] text-gold/80 leading-[1.9] relative">{c.body1}</p>
           <div className="w-10 h-px mx-auto my-3" style={{ background: 'rgba(201,169,110,0.25)' }} />
