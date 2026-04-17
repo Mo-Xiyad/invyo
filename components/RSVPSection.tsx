@@ -4,35 +4,48 @@ import { useCallback, useEffect, useId, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import SectionStationeryFrame from './SectionStationeryFrame'
 import OrnamentDivider from './OrnamentDivider'
+import { eventLabel, routeLabel, type InviteRoute, type RsvpEvent } from '@/lib/rsvp'
 
-// const WA_NUMBER = '46724551114'
 const WA_NUMBER = '9609697543'
 
 type GuestChoice = 'solo' | 'plusone'
 
-function buildWhatsAppHref(choice: GuestChoice): string {
-  const guestLine =
-    choice === 'solo'
-      ? 'I will attend on my own (no plus one).'
-      : 'I will attend with a plus one (2 guests total, including myself).'
+function buildWhatsAppHref(params: {
+  guestName: string
+  event: RsvpEvent
+  plusOne: boolean
+  route: InviteRoute
+}): string {
+  const guestLine = params.plusOne
+    ? 'I will attend with a plus one (2 guests total, including myself).'
+    : 'I will attend on my own (no plus one).'
   const text = `Hi,
 
-I would like to RSVP for the Marriage Ceremony of Ibrahim Zimam & Yanal Ahmed on 8th May 2026.
+I'm ${params.guestName}. I'd like to RSVP for the ${eventLabel(params.event)} of Ibrahim Zimam & Yanal Ahmed on 8th May 2026.
 
+Invite: ${routeLabel(params.route)} list.
 ${guestLine}
 
 Thank you!`
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`
 }
 
-export default function RSVPSection() {
+export default function RSVPSection({ inviteRoute }: { inviteRoute: InviteRoute }) {
   const dialogLabelId = useId()
   const [sheetOpen, setSheetOpen] = useState(false)
+  const [guestName, setGuestName] = useState('')
+  const [rsvpEvent, setRsvpEvent] = useState<RsvpEvent>('marriage_ceremony')
   const [guestChoice, setGuestChoice] = useState<GuestChoice | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const closeSheet = useCallback(() => {
     setSheetOpen(false)
+    setGuestName('')
+    setRsvpEvent('marriage_ceremony')
     setGuestChoice(null)
+    setSubmitError(null)
+    setSubmitting(false)
   }, [])
 
   useEffect(() => {
@@ -53,9 +66,45 @@ export default function RSVPSection() {
     return () => window.removeEventListener('keydown', onKey)
   }, [sheetOpen, closeSheet])
 
+  const canSubmit = guestName.trim().length > 0 && guestChoice !== null && !submitting
+
+  const handleSubmit = async () => {
+    if (!guestChoice) return
+    setSubmitError(null)
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          guestName: guestName.trim(),
+          event: rsvpEvent,
+          plusOne: guestChoice === 'plusone',
+          route: inviteRoute,
+        }),
+      })
+      const data = (await res.json().catch(() => ({}))) as { error?: string }
+      if (!res.ok) {
+        throw new Error(data.error || 'Could not save RSVP')
+      }
+      const href = buildWhatsAppHref({
+        guestName: guestName.trim(),
+        event: rsvpEvent,
+        plusOne: guestChoice === 'plusone',
+        route: inviteRoute,
+      })
+      window.open(href, '_blank', 'noopener,noreferrer')
+      closeSheet()
+    } catch (e) {
+      setSubmitError(e instanceof Error ? e.message : 'Something went wrong')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
   return (
     <section className="relative bg-parchment px-5 pt-10 pb-16 text-center">
-      {/* <SectionStationeryFrame className="max-w-[300px]"> */}
+      <SectionStationeryFrame className="max-w-[300px]">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -84,7 +133,7 @@ export default function RSVPSection() {
 
           <p className="mt-5 font-cinzel italic text-[11px] text-muted">Kindly reply by 22nd April 2026</p>
         </motion.div>
-      {/* </SectionStationeryFrame> */}
+      </SectionStationeryFrame>
 
       <div className="mx-auto mt-8 flex max-w-[300px] flex-col items-center text-center">
         <OrnamentDivider />
@@ -112,7 +161,7 @@ export default function RSVPSection() {
               role="dialog"
               aria-modal="true"
               aria-labelledby={dialogLabelId}
-              className="relative z-[1] w-full max-w-[320px] rounded-[6px] border border-gold/35 bg-parchment p-[10px] shadow-[0_24px_60px_rgba(26,14,6,0.45),0_0_0_1px_rgba(255,252,248,0.6)_inset]"
+              className="relative z-[1] max-h-[min(90dvh,640px)] w-full max-w-[340px] overflow-y-auto rounded-[6px] border border-gold/35 bg-parchment p-[10px] shadow-[0_24px_60px_rgba(26,14,6,0.45),0_0_0_1px_rgba(255,252,248,0.6)_inset]"
               initial={{ opacity: 0, y: 28, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -122,10 +171,10 @@ export default function RSVPSection() {
                 <div className="mb-4 flex items-start justify-between gap-3">
                   <div className="text-left">
                     <p id={dialogLabelId} className="font-cinzel text-[15px] font-light text-ink leading-snug">
-                      Guest details
+                      Your RSVP
                     </p>
                     <p className="mt-1 font-cinzel italic text-[11.5px] text-muted leading-relaxed">
-                      Will you bring a plus one?
+                      We&apos;ll save your reply, then open WhatsApp with the same details.
                     </p>
                   </div>
                   <button
@@ -137,6 +186,48 @@ export default function RSVPSection() {
                   </button>
                 </div>
 
+                <label className="mb-1 block text-left font-cinzel text-[9px] uppercase tracking-[2px] text-muted">
+                  Your name
+                </label>
+                <input
+                  type="text"
+                  name="guestName"
+                  autoComplete="name"
+                  value={guestName}
+                  onChange={(e) => setGuestName(e.target.value)}
+                  placeholder="Full name"
+                  className="mb-4 w-full rounded-sm border border-gold/25 bg-parchment px-3 py-2.5 font-cinzel text-[13px] text-ink outline-none ring-gold/30 placeholder:text-muted/60 focus:border-gold/50 focus:ring-1"
+                />
+
+                <p className="mb-2 text-left font-cinzel text-[9px] uppercase tracking-[2px] text-muted">Event</p>
+                <div className="mb-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  <button
+                    type="button"
+                    onClick={() => setRsvpEvent('marriage_ceremony')}
+                    className={`rounded-sm border px-3 py-3 text-left transition-[border-color,box-shadow,background] duration-200 ${
+                      rsvpEvent === 'marriage_ceremony'
+                        ? 'border-gold bg-[rgba(201,169,110,0.12)] shadow-[inset_0_0_0_1px_rgba(201,169,110,0.35)]'
+                        : 'border-gold/20 bg-parchment hover:border-gold/40'
+                    }`}
+                  >
+                    <p className="font-cinzel text-[10px] uppercase tracking-[2.5px] text-gold">Ceremony</p>
+                    <p className="mt-1 font-cinzel text-[12px] text-ink leading-tight">Marriage ceremony</p>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRsvpEvent('wedding')}
+                    className={`rounded-sm border px-3 py-3 text-left transition-[border-color,box-shadow,background] duration-200 ${
+                      rsvpEvent === 'wedding'
+                        ? 'border-gold bg-[rgba(201,169,110,0.12)] shadow-[inset_0_0_0_1px_rgba(201,169,110,0.35)]'
+                        : 'border-gold/20 bg-parchment hover:border-gold/40'
+                    }`}
+                  >
+                    <p className="font-cinzel text-[10px] uppercase tracking-[2.5px] text-gold">Celebration</p>
+                    <p className="mt-1 font-cinzel text-[12px] text-ink leading-tight">Wedding</p>
+                  </button>
+                </div>
+
+                <p className="mb-2 text-left font-cinzel text-[9px] uppercase tracking-[2px] text-muted">Guest count</p>
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                   <button
                     type="button"
@@ -166,24 +257,24 @@ export default function RSVPSection() {
                   </button>
                 </div>
 
+                {submitError && (
+                  <p className="mt-4 rounded-sm border border-red-900/20 bg-red-50/80 px-3 py-2 text-left font-cinzel text-[11px] text-red-900/90">
+                    {submitError}
+                  </p>
+                )}
+
                 <div className="mt-5 flex flex-col gap-2">
-                  {guestChoice ? (
-                    <a
-                      href={buildWhatsAppHref(guestChoice)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Send RSVP in WhatsApp"
-                      onClick={() => {
-                        setTimeout(closeSheet, 400)
-                      }}
-                      className="flex w-full items-center justify-center rounded-sm border border-gold/50 bg-espresso py-3.5 font-cinzel text-[10px] font-medium uppercase tracking-[0.22em] text-champagne shadow-[0_8px_22px_rgba(42,24,8,0.28)] transition-[transform,filter] active:scale-[0.99]"
-                    >
-                      RSVP
-                    </a>
-                  ) : (
-                    <p className="py-3 font-cinzel italic text-[11px] text-muted/90">
-                      Select how many will attend.
-                    </p>
+                  <button
+                    type="button"
+                    disabled={!canSubmit}
+                    onClick={() => void handleSubmit()}
+                    aria-label="Save RSVP and open WhatsApp"
+                    className="flex w-full items-center justify-center rounded-sm border border-gold/50 bg-espresso py-3.5 font-cinzel text-[10px] font-medium uppercase tracking-[0.22em] text-champagne shadow-[0_8px_22px_rgba(42,24,8,0.28)] transition-[transform,opacity] enabled:active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-45"
+                  >
+                    {submitting ? 'Saving…' : 'RSVP'}
+                  </button>
+                  {!canSubmit && !submitting && (
+                    <p className="font-cinzel italic text-[11px] text-muted/90">Enter your name and guest count to continue.</p>
                   )}
                 </div>
               </div>

@@ -11,11 +11,18 @@ import OrnamentDivider from './OrnamentDivider'
 import PrivateNotice from './PrivateNotice'
 import RSVPSection from './RSVPSection'
 import AudioPlayer, { type AudioPlayerHandle } from './AudioPlayer'
+import type { InviteRoute } from '@/lib/rsvp'
 
 const LOADING_SEAL_SRC = '/assets/vax-seal.png'
 const CRITICAL_ASSETS = ['/assets/vax-seal.png', '/assets/Z-y-logo.png', '/assets/front-page-bg.png']
 
-export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' | '17:30' }) {
+export default function InvitationPage({
+  arrivalTime,
+  inviteRoute,
+}: {
+  arrivalTime: '16:30' | '17:30'
+  inviteRoute: InviteRoute
+}) {
   const [phase, setPhase] = useState<'envelope' | 'open'>('envelope')
   const [openingEnvelope, setOpeningEnvelope] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -104,7 +111,7 @@ export default function InvitationPage({ arrivalTime }: { arrivalTime: '16:30' |
             <VenueMap />
             <OrnamentDivider />
             <PrivateNotice />
-            <RSVPSection />
+            <RSVPSection inviteRoute={inviteRoute} />
           </main>
         )}
 
