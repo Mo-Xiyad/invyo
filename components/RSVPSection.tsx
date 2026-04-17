@@ -6,8 +6,8 @@ import SectionStationeryFrame from './SectionStationeryFrame'
 import OrnamentDivider from './OrnamentDivider'
 import { eventLabel, routeLabel, type InviteRoute, type RsvpEvent } from '@/lib/rsvp'
 
-// const WA_NUMBER = '9609697543'
-const WA_NUMBER = '21696482475'
+const WA_NUMBER = '9609697543'
+// const WA_NUMBER = '21696482475'
 type GuestChoice = 'solo' | 'plusone'
 
 function buildWhatsAppHref(params: {
