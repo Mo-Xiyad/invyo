@@ -11,7 +11,7 @@ const fadeUp = {
 const rows = (arrivalTime: string) => [
   { glyph: '✦', label: 'Date', value: 'Thursday, 8th May 2026', pill: null as string | null },
   { glyph: '◷', label: 'Arrival · Ends', value: `${arrivalTime} — 19:30`, pill: 'Ends at 19:30' },
-  { glyph: '⌖', label: 'Venue', value: 'Pavilion by Gold', pill: null as string | null },
+  { glyph: '⌖', label: 'Venue', value: 'Maagiri Hotel, Terrace', pill: null as string | null },
 ]
 
 export default function EventDetails({ arrivalTime }: { arrivalTime: string }) {

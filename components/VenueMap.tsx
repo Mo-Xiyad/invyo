@@ -4,10 +4,10 @@ import { motion } from 'framer-motion'
 import SectionStationeryFrame from './SectionStationeryFrame'
 
 const MAPS_EMBED =
-  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1563.8215046086982!2d73.50197245862587!3d4.175075788739645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b3f7f177cdaeed5%3A0xc64d6b60bacc23a3!2sPavilion%20by%20Gold!5e1!3m2!1sen!2sse!4v1776172404845!5m2!1sen!2sse'
-const DIRECTIONS_URL = 'https://maps.app.goo.gl/ntVCs2GkrDmSJBRp6'
+  'https://maps.google.com/maps?q=4.177233639113027,73.51725976093194&z=17&output=embed'
+const DIRECTIONS_URL = 'https://share.google/cRERva7jXAsa1gyrO'
 const CALENDAR_URL =
-  'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Ibrahim+Zimam+%26+Yanal+Ahmed+%E2%80%94+Marriage+Ceremony&dates=20260508T113000Z%2F20260508T143000Z&details=Marriage+Ceremony&location=Pavilion+by+Gold%2C+Mafannu%2C+Mal%C3%A9%2C+Maldives'
+  'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Ibrahim+Zimam+%26+Yanal+Ahmed+%E2%80%94+Marriage+Ceremony&dates=20260508T113000Z%2F20260508T143000Z&details=Marriage+Ceremony&location=Maagiri+Hotel%2C+Terrace%2C+20012+Mal%C3%A9%2C+Boduthakurufaanu+Magu%2C+Mal%C3%A9%2C+Maldives'
 
 export default function VenueMap() {
   return (
@@ -22,11 +22,11 @@ export default function VenueMap() {
         >
           The Venue
         </motion.h2>
-        <p className="font-cinzel text-[26px] text-ink text-center mb-1">Pavilion by Gold</p>
+        <p className="font-cinzel text-[26px] text-ink text-center mb-1">Maagiri Hotel, Terrace</p>
         <p className="mb-4 text-center font-cinzel text-[12px] italic leading-relaxed text-muted">
-          Mafannu, Malé
+         Boduthakurufaanu Magu
           <br />
-          Maldives
+          Malé, Maldives
         </p>
 
         <div className="relative mb-3 overflow-hidden rounded-sm ring-1 ring-[rgba(138,96,48,0.2)]">
@@ -35,7 +35,7 @@ export default function VenueMap() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             allowFullScreen
-            title="Pavilion by Gold map"
+            title="Maagiri Hotel, Terrace map"
             className="block h-[170px] w-full border-0"
             style={{
               filter: 'sepia(0.55) saturate(0.65) brightness(0.97) contrast(1.08) hue-rotate(8deg)',

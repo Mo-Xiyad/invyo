@@ -270,7 +270,7 @@ export default function HeroSection() {
           transition={{ delay: 0.2, duration: 0.6 }}
         >
           <p className="font-cinzel text-[10px] tracking-[3px] text-[#5a3a1a] mb-1">8th May · MMXXVI</p>
-          <p className="font-cinzel italic text-[13px] text-muted">Pavilion by Gold, Maldives</p>
+          <p className="font-cinzel italic text-[13px] text-muted">Maagiri Hotel, Terrace</p>
         </motion.div>
       )}
 
