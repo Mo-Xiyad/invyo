@@ -23,67 +23,20 @@ export default function MockupCard({ variant }: MockupCardProps) {
   return <TrackMockup />
 }
 
-/** Editor / browser: builder + live preview */
+/** Create section — `public/assets/custom.png` */
 function CreateMockup() {
   return (
     <div className="flex w-full items-center justify-center py-4">
-      <svg
-        viewBox="0 0 480 360"
-        className="w-full max-w-md drop-shadow-xl"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient id="create-preview-top" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={accentSoft} />
-            <stop offset="100%" stopColor={white} />
-          </linearGradient>
-        </defs>
-        <rect x="16" y="16" width="448" height="328" rx="18" fill={white} stroke={border} strokeWidth="1.25" />
-        <rect x="16" y="16" width="448" height="52" rx="18" fill={subtle} />
-        <rect x="16" y="42" width="448" height="26" fill={subtle} />
-        <circle cx="40" cy="42" r="5.5" fill={accent} opacity="0.45" />
-        <circle cx="58" cy="42" r="5.5" fill={accent} opacity="0.3" />
-        <circle cx="76" cy="42" r="5.5" fill={accent} opacity="0.2" />
-        <rect x="108" y="32" width="264" height="22" rx="11" fill={white} stroke={border} strokeWidth="1" />
-        <text x="240" y="47" textAnchor="middle" fontSize="9" fontWeight="600" fill={muted} fontFamily={fontUi}>
-          wedvite.me/your-name
-        </text>
-        <rect x="36" y="84" width="108" height="244" rx="14" fill={surface} stroke={border} strokeWidth="1" />
-        <text x="90" y="118" textAnchor="middle" fontSize="8" fontWeight="700" fill={ink} fontFamily={fontUi} letterSpacing="0.06em">
-          THEMES
-        </text>
-        <rect x="52" y="132" width="76" height="28" rx="8" fill={accentSoft} opacity="0.65" stroke={border} />
-        <rect x="52" y="168" width="76" height="28" rx="8" fill={subtle} stroke={border} />
-        <rect x="52" y="204" width="76" height="28" rx="8" fill={subtle} stroke={border} />
-        <rect x="52" y="248" width="76" height="36" rx="10" fill={footer} />
-        <text x="90" y="271" textAnchor="middle" fontSize="8" fontWeight="700" fill={accentSoft} fontFamily={fontUi}>
-          Save
-        </text>
-        <rect x="160" y="84" width="284" height="244" rx="16" fill={white} stroke={border} strokeWidth="1" />
-        <rect x="176" y="100" width="252" height="56" rx="12" fill="url(#create-preview-top)" stroke={border} strokeWidth="0.75" />
-        <text x="302" y="124" textAnchor="middle" fontSize="8" fontWeight="600" fill={muted} fontFamily={fontUi} letterSpacing="0.04em">
-          TOGETHER WITH THEIR FAMILIES
-        </text>
-        <text x="302" y="150" textAnchor="middle" fontSize="20" fontWeight="800" fill={ink} fontFamily={fontUi} letterSpacing="-0.02em">
-          Sarah &amp; James
-        </text>
-        <rect x="232" y="162" width="140" height="3" rx="1.5" fill={accent} opacity="0.35" />
-        <text x="302" y="188" textAnchor="middle" fontSize="8" fontWeight="500" fill={muted} fontFamily={fontUi}>
-          Saturday, June 14, 2026
-        </text>
-        <text x="302" y="204" textAnchor="middle" fontSize="7.5" fontWeight="500" fill={muted} fontFamily={fontUi}>
-          The Grand Ballroom · New York
-        </text>
-        <rect x="258" y="224" width="88" height="30" rx="15" fill={footer} />
-        <text x="302" y="244" textAnchor="middle" fontSize="9" fontWeight="700" fill={white} fontFamily={fontUi}>
-          RSVP
-        </text>
-        <rect x="176" y="286" width="252" height="28" rx="8" fill={subtle} stroke={border} />
-        <text x="302" y="304" textAnchor="middle" fontSize="7" fontWeight="600" fill={muted} fontFamily={fontUi}>
-          Preview updates live
-        </text>
-      </svg>
+      <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-lt-border bg-lt-surface shadow-[0_12px_40px_-12px_rgba(27,33,26,0.18)] md:rounded-[1.35rem]">
+        <Image
+          src="/assets/custom.png"
+          alt="Customize your Wedvite with themes, photos, and live preview"
+          width={1402}
+          height={1122}
+          className="h-auto w-full"
+          sizes="(max-width: 1024px) 100vw, min(672px, 50vw)"
+        />
+      </div>
     </div>
   )
 }
