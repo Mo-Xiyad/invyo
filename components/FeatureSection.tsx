@@ -17,7 +17,7 @@ export default function FeatureSection({
   imagePosition,
   title,
   subtitle,
-  bgColor = 'bg-champagne',
+  bgColor = 'bg-lt-surface',
 }: FeatureSectionProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
@@ -37,32 +37,38 @@ export default function FeatureSection({
     <motion.div
       initial={{ opacity: 0, x: imageLeft ? 40 : -40 }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className="flex flex-col gap-6"
+      transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col gap-5 md:gap-6"
     >
-      <div className="w-12 h-0.5 bg-gold" />
-      <h2 className="font-serif text-4xl lg:text-5xl text-espresso leading-tight">
+      <div className="h-1 w-14 rounded-full bg-lt-ink" aria-hidden />
+      <h2 className="font-display text-3xl font-extrabold leading-tight tracking-tight text-lt-ink md:text-4xl lg:text-[2.75rem]">
         {title}
       </h2>
-      <p className="font-sans text-lg text-muted leading-relaxed">
+      <p className="max-w-xl font-sans text-base font-medium leading-relaxed text-lt-muted md:text-lg">
         {subtitle}
       </p>
       <Link
         href="/get-started"
-        className="inline-flex items-center gap-2 text-sm font-sans font-bold text-espresso border-b border-espresso pb-0.5 hover:text-gold-deep hover:border-gold-deep transition-colors duration-200 self-start"
+        className="inline-flex w-fit items-center gap-2 rounded-full bg-lt-ink px-8 py-3.5 font-sans text-sm font-bold text-lt-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
       >
         Get started for free
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+          <path
+            d="M3 8h10M9 4l4 4-4 4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </Link>
     </motion.div>
   )
 
   return (
-    <section className={`${bgColor} py-24 overflow-hidden`} ref={ref}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section className={`${bgColor} py-20 md:py-28`} ref={ref}>
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
           {imageLeft ? mockup : text}
           {imageLeft ? text : mockup}
         </div>

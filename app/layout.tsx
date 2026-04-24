@@ -1,24 +1,17 @@
 import type { Metadata } from 'next'
-import { Amiri, Lato, Playfair_Display } from 'next/font/google'
+import { DM_Sans, Syne } from 'next/font/google'
 import './globals.css'
 
-const playfair = Playfair_Display({
+const syne = Syne({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  variable: '--font-syne',
+})
+
+const dmSans = DM_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--playfair',
-})
-
-const lato = Lato({
-  subsets: ['latin'],
-  weight: ['300', '400', '700'],
-  variable: '--lato',
-})
-
-const amiri = Amiri({
-  subsets: ['arabic', 'latin'],
-  weight: ['400', '700'],
-  variable: '--amiri',
+  variable: '--font-dm-sans',
 })
 
 export const metadata: Metadata = {
@@ -29,10 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${playfair.variable} ${lato.variable} ${amiri.variable}`}
-    >
+    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
       <body suppressHydrationWarning className="antialiased">
         {children}
       </body>

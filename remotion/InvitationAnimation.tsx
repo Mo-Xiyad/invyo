@@ -60,7 +60,7 @@ export const InvitationAnimation: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: '#f7f0e4',
+        background: '#f0f2ec',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -71,11 +71,11 @@ export const InvitationAnimation: React.FC = () => {
           opacity: cardOpacity,
           background: 'white',
           borderRadius: 12,
-          border: '1px solid rgba(201,169,110,0.3)',
+          border: '1px solid rgba(221,226,216,0.95)',
           padding: '52px 60px',
           width: 480,
           textAlign: 'center',
-          boxShadow: '0 24px 64px rgba(42,24,8,0.12)',
+          boxShadow: '0 24px 48px rgba(27,33,26,0.08)',
         }}
       >
         {/* Top ornament */}
