@@ -6,7 +6,7 @@ export default function SiteFooter() {
       <div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 md:flex-row md:items-start md:justify-between md:px-8">
         <div>
           <Link href="/" className="font-display text-xl font-extrabold tracking-tight text-lt-surface hover:text-lt-lime">
-            Wedvite
+            Invyo
           </Link>
           <p className="mt-3 max-w-xs font-sans text-sm font-medium text-white/45">
             Digital wedding invitations that work.
@@ -39,7 +39,7 @@ export default function SiteFooter() {
       </div>
 
       <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 px-5 pt-8 md:px-8">
-        <p className="font-sans text-xs font-medium text-white/35">© {new Date().getFullYear()} Wedvite</p>
+        <p className="font-sans text-xs font-medium text-white/35">© {new Date().getFullYear()} Invyo</p>
       </div>
     </footer>
   )

@@ -14,43 +14,43 @@ export type HeroCard = {
 export const HERO_CARD_IMAGES: HeroCard[] = [
   {
     src: '/assets/screen-1.png',
-    alt: 'Example Wedvite invitation screen 1',
+    alt: 'Example Invyo invitation screen 1',
     title: 'Amelia & Noah',
     slug: 'amelia-noah',
   },
   {
     src: '/assets/screen-2.png',
-    alt: 'Example Wedvite invitation screen 2',
+    alt: 'Example Invyo invitation screen 2',
     title: 'Sofia & Marco',
     slug: 'sofia-marco',
   },
   {
     src: '/assets/screen-3.png',
-    alt: 'Example Wedvite invitation screen 3',
+    alt: 'Example Invyo invitation screen 3',
     title: 'Elena & James',
     slug: 'elena-james',
   },
   {
     src: '/assets/screen-4.png',
-    alt: 'Example Wedvite invitation screen 4',
+    alt: 'Example Invyo invitation screen 4',
     title: 'Priya & Daniel',
     slug: 'priya-daniel',
   },
   {
     src: '/assets/screen-5.png',
-    alt: 'Example Wedvite invitation screen 5',
+    alt: 'Example Invyo invitation screen 5',
     title: 'Hannah & Chris',
     slug: 'hannah-chris',
   },
   {
     src: '/assets/screen-6.png',
-    alt: 'Example Wedvite invitation screen 6',
+    alt: 'Example Invyo invitation screen 6',
     title: 'Lucy & Tom',
     slug: 'lucy-tom',
   },
   {
     src: '/assets/screen-7.png',
-    alt: 'Example Wedvite invitation screen 7',
+    alt: 'Example Invyo invitation screen 7',
     title: 'Maya & Jordan',
     slug: 'maya-jordan',
   },
@@ -71,7 +71,7 @@ function InviteCard({ card }: { card: HeroCard }) {
       </div>
       <div className="border-t border-lt-border px-3 py-2.5">
         <p className="truncate font-display text-sm font-extrabold tracking-tight text-lt-ink">{card.title}</p>
-        <p className="truncate font-sans text-[11px] font-semibold text-lt-muted">wedvite.me/{card.slug}</p>
+        <p className="truncate font-sans text-[11px] font-semibold text-lt-muted">invyo.me/{card.slug}</p>
       </div>
     </div>
   )

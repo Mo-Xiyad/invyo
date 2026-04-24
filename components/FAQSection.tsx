@@ -10,7 +10,7 @@ const faqs: { q: string; a: ReactNode }[] = [
   },
   {
     q: 'Does my link expire?',
-    a: 'Free Wedvites expire after 30 days, to keep your link online we have a small fee of 2€/month so we can maintain our service!',
+    a: 'Free Invyo invitations expire after 30 days, to keep your link online we have a small fee of 2€/month so we can maintain our service!',
   },
   {
     q: 'I would like to customize the invitation, can you do this for me?',
@@ -41,7 +41,7 @@ const faqs: { q: string; a: ReactNode }[] = [
     a: 'Free users can invite up to 20 guests, paid users can invite up to 500 guests.',
   },
   {
-    q: 'Do I need a domain to use Wedvite?',
+    q: 'Do I need a domain to use Invyo?',
     a: 'No, having your own domain is optional. We provide our users with a free link, which can be customized on paid plans.',
   },
   {
@@ -54,7 +54,7 @@ const faqs: { q: string; a: ReactNode }[] = [
   },
   {
     q: 'Can guests bring plus-ones?',
-    a: 'Yes, if you want them to. This is a simple setting to set on your Wedvite.',
+    a: 'Yes, if you want them to. This is a simple setting to set on your Invyo.',
   },
 ]
 
@@ -148,7 +148,7 @@ export default function FAQSection() {
           transition={{ duration: 0.65, delay: 0.35 }}
           className="mt-16 border-t border-lt-border pt-12 text-center md:mt-20 md:pt-16"
         >
-          <h3 className="font-display text-2xl font-extrabold text-lt-ink md:text-3xl">Create your Wedvite in 5 minutes</h3>
+          <h3 className="font-display text-2xl font-extrabold text-lt-ink md:text-3xl">Create your Invyo in 5 minutes</h3>
           <Link
             href="/get-started"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-lt-ink px-8 py-4 font-sans text-sm font-bold text-lt-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"

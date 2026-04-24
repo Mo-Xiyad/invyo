@@ -4,7 +4,7 @@ import NavBar from '@/components/NavBar'
 import SiteFooter from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
-  title: 'Page not found — Wedvite',
+  title: 'Page not found — Invyo',
   description: 'This page does not exist or has been moved.',
 }
 

@@ -23,7 +23,7 @@ export default function NavBar() {
           href="/"
           className="font-display text-lg font-extrabold tracking-tight text-lt-ink md:text-xl"
         >
-          Wedvite
+          Invyo
         </Link>
         <div className="flex items-center gap-2 md:gap-3">
           <Link

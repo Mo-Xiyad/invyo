@@ -30,7 +30,7 @@ function CreateMockup() {
       <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-lt-border bg-lt-surface shadow-[0_12px_40px_-12px_rgba(27,33,26,0.18)] md:rounded-[1.35rem]">
         <Image
           src="/assets/custom.png"
-          alt="Customize your Wedvite with themes, photos, and live preview"
+          alt="Customize your Invyo with themes, photos, and live preview"
           width={1402}
           height={1122}
           className="h-auto w-full"
@@ -48,7 +48,7 @@ function ShareMockup() {
       <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-lt-border bg-lt-surface shadow-[0_12px_40px_-12px_rgba(27,33,26,0.18)] md:rounded-[1.35rem]">
         <Image
           src="/assets/ui-edits.png"
-          alt="Share your Wedvite link with guests in messages, email, and social apps"
+          alt="Share your Invyo link with guests in messages, email, and social apps"
           width={1402}
           height={1122}
           className="h-auto w-full"

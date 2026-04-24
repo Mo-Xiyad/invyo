@@ -39,13 +39,13 @@ export default function HeroSection() {
               transition={{ duration: 0.55, delay: 0.16 }}
               className="mt-10 flex w-full max-w-lg flex-col gap-3 sm:flex-row sm:items-stretch lg:max-w-none"
             >
-              <label className="sr-only" htmlFor="wedvite-url-preview">
-                Your Wedvite link
+              <label className="sr-only" htmlFor="invyo-url-preview">
+                Your Invyo link
               </label>
               <div className="flex min-h-[52px] flex-1 items-center rounded-full border-2 border-lt-ink bg-lt-surface px-5 text-left shadow-sm">
-                <span className="select-none font-sans text-sm font-semibold text-lt-muted">wedvite.me/</span>
+                <span className="select-none font-sans text-sm font-semibold text-lt-muted">invyo.me/</span>
                 <input
-                  id="wedvite-url-preview"
+                  id="invyo-url-preview"
                   readOnly
                   tabIndex={-1}
                   defaultValue="your-names"

@@ -15,7 +15,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Wedvite — Digital Wedding Invitations That Work',
+  title: 'Invyo — Digital Wedding Invitations That Work',
   description:
     'Create your sharable digital wedding invitation in minutes. No design skills needed. Track RSVPs in one place.',
 }
