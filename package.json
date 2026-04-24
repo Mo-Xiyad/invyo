@@ -1,21 +1,22 @@
 {
-  "name": "zim-and-yanal",
+  "name": "wedding-invitation-invyo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "assets:hero-mobile": "python3 scripts/generate-hero-mobile-bg.py"
+    "lint": "eslint"
   },
   "dependencies": {
+    "@remotion/player": "^4.0.451",
     "@upstash/redis": "^1.37.0",
     "canvas-confetti": "^1.9.4",
     "framer-motion": "^12.38.0",
     "next": "16.2.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "remotion": "^4.0.451"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
