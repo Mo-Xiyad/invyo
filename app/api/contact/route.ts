@@ -11,6 +11,13 @@ type ContactPayload = {
 }
 
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+const escapeHtml = (value: string) =>
+  value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;')
 
 export async function POST(request: Request) {
   const apiKey = process.env.BREVO_API_KEY
@@ -54,15 +61,55 @@ export async function POST(request: Request) {
   }
 
   const emailBodyHtml = `
-    <h2>New Invyo Contact Submission</h2>
-    <p><strong>Name:</strong> ${name}</p>
-    <p><strong>Email:</strong> ${email}</p>
-    <p><strong>Preferred Contact:</strong> ${preferredContact === 'whatsapp' ? 'WhatsApp' : 'Email'}</p>
-    <p><strong>WhatsApp Number:</strong> ${whatsappNumber || 'Not provided'}</p>
-    <p><strong>Instagram/Social:</strong> ${instagram || 'Not provided'}</p>
-    <p><strong>Event Date:</strong> ${eventDate || 'Not provided'}</p>
-    <p><strong>Message:</strong></p>
-    <p>${message.replace(/\n/g, '<br/>')}</p>
+    <div style="margin:0;padding:24px;background:#f0f2ec;font-family:'DM Sans',Arial,sans-serif;color:#252b24;">
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:640px;margin:0 auto;background:#fdfdf9;border:1px solid #dde2d8;border-radius:18px;overflow:hidden;">
+        <tr>
+          <td style="padding:22px 24px;background:#252b24;color:#fdfdf9;">
+            <p style="margin:0 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;">Invyo</p>
+            <h1 style="margin:0;font-size:22px;line-height:1.25;font-weight:800;">New contact form submission</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:22px 24px;">
+            <p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#5c6558;">
+              A new lead has submitted the website contact form.
+            </p>
+
+            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;">
+              <tr>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:13px;color:#5c6558;width:42%;">Name</td>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:14px;font-weight:600;text-align:right;">${escapeHtml(name)}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:13px;color:#5c6558;">Email</td>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:14px;font-weight:600;text-align:right;">${escapeHtml(email)}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:13px;color:#5c6558;">Preferred contact</td>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:14px;font-weight:600;text-align:right;">${preferredContact === 'whatsapp' ? 'WhatsApp' : 'Email'}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:13px;color:#5c6558;">WhatsApp number</td>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:14px;font-weight:600;text-align:right;">${escapeHtml(whatsappNumber || 'Not provided')}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:13px;color:#5c6558;">Instagram / social</td>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:14px;font-weight:600;text-align:right;">${escapeHtml(instagram || 'Not provided')}</td>
+              </tr>
+              <tr>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:13px;color:#5c6558;">Event date</td>
+                <td style="padding:10px 0;border-top:1px solid #dde2d8;font-size:14px;font-weight:600;text-align:right;">${escapeHtml(eventDate || 'Not provided')}</td>
+              </tr>
+            </table>
+
+            <div style="margin-top:16px;padding:14px;border:1px solid #dde2d8;border-radius:12px;background:#ffffff;">
+              <p style="margin:0 0 8px;font-size:13px;color:#5c6558;">Message</p>
+              <p style="margin:0;font-size:14px;line-height:1.6;color:#252b24;">${escapeHtml(message).replace(/\n/g, '<br/>')}</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
   `
 
   try {
@@ -83,10 +130,26 @@ export async function POST(request: Request) {
     })
 
     if (!brevoResponse.ok) {
+      const errorId = crypto.randomUUID()
       const errorText = await brevoResponse.text()
-      console.error('Brevo send failure:', errorText)
+      let clientMessage = 'Could not send your message right now. Please try again shortly.'
+
+      if (brevoResponse.status === 401 || brevoResponse.status === 403) {
+        clientMessage = 'Email service authentication is misconfigured. Please contact support.'
+      } else if (brevoResponse.status === 400) {
+        clientMessage = 'Email service configuration is incomplete. Please contact support.'
+      }
+
+      console.error('Brevo send failure', {
+        errorId,
+        status: brevoResponse.status,
+        statusText: brevoResponse.statusText,
+        responseBody: errorText,
+        senderEmail,
+        contactToEmail,
+      })
       return NextResponse.json(
-        { error: 'Could not send your message right now. Please try again shortly.' },
+        { error: clientMessage, errorId },
         { status: 502 },
       )
     }
