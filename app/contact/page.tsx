@@ -10,6 +10,7 @@ type FormState = {
   email: string
   preferredContact: 'email' | 'whatsapp'
   whatsappNumber: string
+  website: string
   instagram: string
   eventDate: string
   message: string
@@ -20,6 +21,7 @@ const initialState: FormState = {
   email: '',
   preferredContact: 'email',
   whatsappNumber: '',
+  website: '',
   instagram: '',
   eventDate: '',
   message: '',
@@ -146,6 +148,17 @@ export default function ContactPage() {
                   placeholder="Your name"
                 />
               </label>
+
+              {/* Honeypot field: bots often fill hidden fields */}
+              <input
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden
+                className="hidden"
+                name="website"
+                value={form.website}
+                onChange={(event) => setForm((prev) => ({ ...prev, website: event.target.value }))}
+              />
 
               <label className="block">
                 <span className="mb-1.5 block text-sm font-semibold text-lt-ink">

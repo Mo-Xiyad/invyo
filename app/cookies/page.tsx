@@ -1,5 +1,14 @@
+import type { Metadata } from 'next'
 import NavBar from '@/components/NavBar'
 import SiteFooter from '@/components/SiteFooter'
+
+export const metadata: Metadata = {
+  title: 'Cookie Notice',
+  description: 'Learn how Invyo uses cookies and how you can manage them.',
+  alternates: {
+    canonical: '/cookies',
+  },
+}
 
 export default function CookiesPage() {
   return (

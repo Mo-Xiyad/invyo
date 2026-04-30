@@ -1,16 +1,24 @@
 import { NextResponse } from 'next/server'
+import { getRedis } from '@/lib/redis'
 
 type ContactPayload = {
   name?: string
   email?: string
   preferredContact?: 'email' | 'whatsapp'
   whatsappNumber?: string
+  website?: string
   instagram?: string
   eventDate?: string
   message?: string
 }
 
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+const MAX_NAME_LENGTH = 100
+const MAX_EMAIL_LENGTH = 254
+const MAX_PHONE_LENGTH = 30
+const MAX_INSTAGRAM_LENGTH = 120
+const MAX_MESSAGE_LENGTH = 2000
+
 const escapeHtml = (value: string) =>
   value
     .replaceAll('&', '&amp;')
@@ -18,6 +26,8 @@ const escapeHtml = (value: string) =>
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;')
+const normalizeSuspiciousLinks = (value: string) =>
+  value.replace(/https?:\/\//gi, 'hxxps://').replace(/\./g, '[.]')
 
 export async function POST(request: Request) {
   const apiKey = process.env.BREVO_API_KEY
@@ -33,14 +43,33 @@ export async function POST(request: Request) {
     )
   }
 
+  const origin = request.headers.get('origin')
+  const host = request.headers.get('host')
+  if (origin && host) {
+    try {
+      const originHost = new URL(origin).host
+      if (originHost !== host) {
+        return NextResponse.json({ error: 'Invalid request origin.' }, { status: 403 })
+      }
+    } catch {
+      return NextResponse.json({ error: 'Invalid request origin.' }, { status: 403 })
+    }
+  }
+
   const body = (await request.json()) as ContactPayload
   const name = body.name?.trim() ?? ''
   const email = body.email?.trim() ?? ''
   const preferredContact = body.preferredContact === 'whatsapp' ? 'whatsapp' : 'email'
   const whatsappNumber = body.whatsappNumber?.trim() ?? ''
+  const website = body.website?.trim() ?? ''
   const instagram = body.instagram?.trim() ?? ''
   const eventDate = body.eventDate?.trim() ?? ''
   const message = body.message?.trim() ?? ''
+
+  // Honeypot trap: silently reject obvious bot submissions
+  if (website) {
+    return NextResponse.json({ ok: true })
+  }
 
   if (!name || !email || !message) {
     return NextResponse.json(
@@ -52,6 +81,38 @@ export async function POST(request: Request) {
   if (!isValidEmail(email)) {
     return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 })
   }
+
+  if (
+    name.length > MAX_NAME_LENGTH ||
+    email.length > MAX_EMAIL_LENGTH ||
+    whatsappNumber.length > MAX_PHONE_LENGTH ||
+    instagram.length > MAX_INSTAGRAM_LENGTH ||
+    message.length > MAX_MESSAGE_LENGTH
+  ) {
+    return NextResponse.json({ error: 'One or more fields are too long.' }, { status: 400 })
+  }
+
+  // Rate limit: 5 submissions / 15 min per IP
+  const forwardedFor = request.headers.get('x-forwarded-for') ?? ''
+  const clientIp = forwardedFor.split(',')[0]?.trim() || 'unknown'
+  try {
+    const redis = getRedis()
+    const rateKey = `contact:rate:${clientIp}`
+    const hits = await redis.incr(rateKey)
+    if (hits === 1) {
+      await redis.expire(rateKey, 60 * 15)
+    }
+    if (hits > 5) {
+      return NextResponse.json(
+        { error: 'Too many submissions. Please try again in a few minutes.' },
+        { status: 429 },
+      )
+    }
+  } catch (error) {
+    console.warn('Rate limiter unavailable, continuing without Redis limit:', error)
+  }
+
+  const safeMessage = normalizeSuspiciousLinks(message)
 
   if (preferredContact === 'whatsapp' && !whatsappNumber) {
     return NextResponse.json(
@@ -104,7 +165,7 @@ export async function POST(request: Request) {
 
             <div style="margin-top:16px;padding:14px;border:1px solid #dde2d8;border-radius:12px;background:#ffffff;">
               <p style="margin:0 0 8px;font-size:13px;color:#5c6558;">Message</p>
-              <p style="margin:0;font-size:14px;line-height:1.6;color:#252b24;">${escapeHtml(message).replace(/\n/g, '<br/>')}</p>
+              <p style="margin:0;font-size:14px;line-height:1.6;color:#252b24;">${escapeHtml(safeMessage).replace(/\n/g, '<br/>')}</p>
             </div>
           </td>
         </tr>

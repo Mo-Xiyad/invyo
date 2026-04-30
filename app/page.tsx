@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import NavBar from '@/components/NavBar'
 import HeroSection from '@/components/HeroSection'
 import FeatureSection from '@/components/FeatureSection'
@@ -5,11 +6,42 @@ import ClosingSection from '@/components/ClosingSection'
 import FAQSection from '@/components/FAQSection'
 import SiteFooter from '@/components/SiteFooter'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.invyo.uk'
+
+export const metadata: Metadata = {
+  title: 'Wedding Invitations Made Simple',
+  description:
+    'Build and share your wedding invitation online, collect RSVPs, and keep guest planning simple with Invyo.',
+  alternates: {
+    canonical: '/',
+  },
+}
+
 export default function Home() {
   return (
     <>
       <NavBar />
       <main>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                name: 'Invyo',
+                url: siteUrl,
+                email: 'support@invyo.uk',
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                name: 'Invyo',
+                url: siteUrl,
+              },
+            ]),
+          }}
+        />
         <HeroSection />
         <FeatureSection
           variant="create"

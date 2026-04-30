@@ -1,5 +1,14 @@
+import type { Metadata } from 'next'
 import NavBar from '@/components/NavBar'
 import SiteFooter from '@/components/SiteFooter'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Understand how Invyo collects, uses, and protects personal data.',
+  alternates: {
+    canonical: '/privacy',
+  },
+}
 
 export default function PrivacyPage() {
   return (

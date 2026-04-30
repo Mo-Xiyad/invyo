@@ -1,5 +1,14 @@
+import type { Metadata } from 'next'
 import NavBar from '@/components/NavBar'
 import SiteFooter from '@/components/SiteFooter'
+
+export const metadata: Metadata = {
+  title: 'Terms and Conditions',
+  description: 'Read the terms and conditions for using Invyo services.',
+  alternates: {
+    canonical: '/terms',
+  },
+}
 
 export default function TermsPage() {
   return (
