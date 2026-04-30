@@ -16,6 +16,22 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Contact Form Setup (Brevo)
+
+The contact page posts to `app/api/contact/route.ts` and sends email via Brevo transactional email.
+
+Create a `.env.local` with:
+
+```bash
+BREVO_API_KEY=your_brevo_api_v3_key
+BREVO_SENDER_EMAIL=support@invyo.uk
+BREVO_SENDER_NAME=Invyo Support
+CONTACT_TO_EMAIL=support@invyo.uk
+CONTACT_TO_NAME=Invyo Team
+```
+
+Then restart the dev server.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

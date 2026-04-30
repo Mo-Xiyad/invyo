@@ -27,16 +27,10 @@ export default function NavBar() {
         </Link>
         <div className="flex items-center gap-2 md:gap-3">
           <Link
-            href="/login"
-            className="hidden rounded-full px-4 py-2 text-sm font-semibold text-lt-ink transition-colors hover:bg-lt-subtle sm:inline"
-          >
-            Log in
-          </Link>
-          <Link
-            href="#get-started"
+            href="/contact"
             className="rounded-full bg-lt-ink px-4 py-2.5 text-sm font-bold text-lt-surface transition-transform hover:scale-[1.02] active:scale-[0.98] md:px-5"
           >
-            Get started free
+            Contact
           </Link>
         </div>
       </nav>

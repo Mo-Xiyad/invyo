@@ -150,10 +150,10 @@ export default function FAQSection() {
         >
           <h3 className="font-display text-2xl font-extrabold text-lt-ink md:text-3xl">Create your Invyo in 5 minutes</h3>
           <Link
-            href="/get-started"
+            href="/contact"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-lt-ink px-8 py-4 font-sans text-sm font-bold text-lt-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
-            Get started for free
+            Contact
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
               <path
                 d="M3 8h10M9 4l4 4-4 4"

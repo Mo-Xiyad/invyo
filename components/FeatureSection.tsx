@@ -48,10 +48,10 @@ export default function FeatureSection({
         {subtitle}
       </p>
       <Link
-        href="/get-started"
+        href="/contact"
         className="inline-flex w-fit items-center gap-2 rounded-full bg-lt-ink px-8 py-3.5 font-sans text-sm font-bold text-lt-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
       >
-        Get started for free
+        Contact
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
           <path
             d="M3 8h10M9 4l4 4-4 4"
