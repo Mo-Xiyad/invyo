@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import NavBar from '@/components/NavBar'
 import HeroSection from '@/components/HeroSection'
 import FeatureSection from '@/components/FeatureSection'
+import TemplatesTeaser from '@/components/TemplatesTeaser'
 import ClosingSection from '@/components/ClosingSection'
 import FAQSection from '@/components/FAQSection'
 import SiteFooter from '@/components/SiteFooter'
@@ -43,6 +44,7 @@ export default function Home() {
           }}
         />
         <HeroSection />
+        <TemplatesTeaser />
         <FeatureSection
           variant="create"
           imagePosition="left"

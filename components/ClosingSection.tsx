@@ -57,7 +57,7 @@ export default function ClosingSection() {
             transition={{ duration: 0.65, delay: 0.3 }}
           >
             <Link
-              href="/get-started"
+              href="/templates"
               className="inline-flex items-center gap-2 rounded-full bg-lt-lime px-8 py-4 font-sans text-sm font-bold text-lt-ink transition-transform hover:scale-[1.02] active:scale-[0.98]"
             >
               Explore options

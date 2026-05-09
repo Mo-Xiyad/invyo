@@ -32,7 +32,7 @@
   --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-dm-sans), ui-monospace, monospace;
   --font-cinzel: var(--font-syne), ui-sans-serif, sans-serif;
-  --font-cormorant: var(--font-dm-sans), ui-sans-serif, sans-serif;
+  --font-cormorant: 'Amarna', var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
   --font-vibes: var(--font-syne), ui-sans-serif, sans-serif;
   --font-amiri: var(--font-dm-sans), ui-sans-serif, sans-serif;
 
@@ -106,4 +106,167 @@
   select {
     font-family: inherit;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Arabic Moorish Template Styles  (prefixed with `am-` to avoid conflicts)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Fonts */
+.font-playfair { font-family: var(--font-playfair), 'Playfair Display', serif; }
+.font-lato     { font-family: var(--font-lato), 'Lato', sans-serif; }
+.font-amiri    { font-family: 'Amiri', serif; }
+
+/* Hide scrollbar */
+.am-no-scrollbar::-webkit-scrollbar { display: none; }
+.am-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Zellige tile patterns */
+.am-zellige-bg {
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C8813A' stroke-width='0.5' opacity='0.15'%3E%3Cpath d='M40 0L54.14 14.14L40 28.28L25.86 14.14Z'/%3E%3Cpath d='M0 40L14.14 25.86L28.28 40L14.14 54.14Z'/%3E%3Cpath d='M40 51.72L54.14 65.86L40 80L25.86 65.86Z'/%3E%3Cpath d='M51.72 40L65.86 25.86L80 40L65.86 54.14Z'/%3E%3Ccircle cx='40' cy='40' r='6'/%3E%3Ccircle cx='0' cy='0' r='6'/%3E%3Ccircle cx='80' cy='0' r='6'/%3E%3Ccircle cx='0' cy='80' r='6'/%3E%3Ccircle cx='80' cy='80' r='6'/%3E%3C/g%3E%3C/svg%3E");
+}
+.am-zellige-bg-dense {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C8813A' stroke-width='0.6'%3E%3Cpath d='M30 0L38 8L30 16L22 8Z' opacity='0.25'/%3E%3Cpath d='M0 30L8 22L16 30L8 38Z' opacity='0.25'/%3E%3Cpath d='M30 44L38 52L30 60L22 52Z' opacity='0.25'/%3E%3Cpath d='M44 30L52 22L60 30L52 38Z' opacity='0.25'/%3E%3Ccircle cx='30' cy='30' r='5' opacity='0.2'/%3E%3Cpath d='M30 10L33 22L42 16L36 25L48 28L36 31L42 40L33 34L30 46L27 34L18 40L24 31L12 28L24 25L18 16L27 22Z' opacity='0.12'/%3E%3Ccircle cx='0' cy='0' r='4' opacity='0.15'/%3E%3Ccircle cx='60' cy='0' r='4' opacity='0.15'/%3E%3Ccircle cx='0' cy='60' r='4' opacity='0.15'/%3E%3Ccircle cx='60' cy='60' r='4' opacity='0.15'/%3E%3Cpath d='M15 0L18 6L24 4L20 9L26 12L20 13L22 18L18 15L15 20L12 15L8 18L10 13L4 12L10 9L6 4L12 6Z' opacity='0.08'/%3E%3Cpath d='M45 30L48 36L54 34L50 39L56 42L50 43L52 48L48 45L45 50L42 45L38 48L40 43L34 42L40 39L36 34L42 36Z' opacity='0.08'/%3E%3C/g%3E%3C/svg%3E");
+}
+.am-zellige-bg-rich {
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C8813A' stroke-width='0.6'%3E%3Cpath d='M60 0L74 14L60 28L46 14Z' opacity='0.2'/%3E%3Cpath d='M0 60L14 46L28 60L14 74Z' opacity='0.2'/%3E%3Cpath d='M60 92L74 106L60 120L46 106Z' opacity='0.2'/%3E%3Cpath d='M92 60L106 46L120 60L106 74Z' opacity='0.2'/%3E%3Ccircle cx='60' cy='60' r='8' opacity='0.15'/%3E%3Ccircle cx='0' cy='0' r='8' opacity='0.15'/%3E%3Ccircle cx='120' cy='0' r='8' opacity='0.15'/%3E%3Ccircle cx='0' cy='120' r='8' opacity='0.15'/%3E%3Ccircle cx='120' cy='120' r='8' opacity='0.15'/%3E%3Cpath d='M60 20L68 40L88 32L72 52L100 60L72 68L88 88L68 80L60 100L52 80L32 88L48 68L20 60L48 52L32 32L52 40Z' opacity='0.08'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Animations */
+@keyframes am-confetti-fall {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+@keyframes am-fade-in-up {
+  0%   { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes am-bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+@keyframes am-pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 4px hsl(32 55% 50% / 0.3)); }
+  50%       { filter: drop-shadow(0 0 12px hsl(32 55% 50% / 0.6)); }
+}
+@keyframes am-pendulum {
+  0%, 100% { transform: rotate(-3deg); }
+  50%       { transform: rotate(3deg); }
+}
+@keyframes am-footer-wave-drift         { 0%, 100% { transform: translateX(0); }  50% { transform: translateX(-32px); } }
+@keyframes am-footer-wave-drift-reverse { 0%, 100% { transform: translateX(0); }  50% { transform: translateX(28px); } }
+@keyframes am-footer-haze-breathe       { 0%, 100% { opacity: 0.82; }             50% { opacity: 1; } }
+@keyframes am-footer-shell-float        { 0%, 100% { transform: translateY(0); }  50% { transform: translateY(-5px); } }
+@keyframes am-footer-star-twinkle       { 0%, 100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.12); opacity: 0.75; } }
+@keyframes am-footer-shimmer-line       { 0% { opacity: 0.35; } 50% { opacity: 0.85; } 100% { opacity: 0.35; } }
+@keyframes am-hero-palm-sway            { 0%, 100% { transform: rotate(-2.8deg); } 50% { transform: rotate(3.8deg); } }
+@keyframes am-hero-palm-sway-alt        { 0%, 100% { transform: rotate(3deg); }   50% { transform: rotate(-3.5deg); } }
+
+.am-animate-confetti       { animation: am-confetti-fall 2.5s ease-in forwards; }
+.am-animate-fade-in-up     { animation: am-fade-in-up 0.8s ease-out forwards; }
+.am-animate-bounce-down    { animation: am-bounce-down 1.5s ease-in-out infinite; }
+.am-animate-pulse-glow     { animation: am-pulse-glow 2s ease-in-out infinite; }
+.am-animate-pendulum       { animation: am-pendulum 4s ease-in-out infinite; transform-origin: top center; }
+.am-animate-footer-wave-drift         { animation: am-footer-wave-drift 14s ease-in-out infinite; }
+.am-animate-footer-wave-drift-reverse { animation: am-footer-wave-drift-reverse 18s ease-in-out infinite; }
+.am-animate-footer-wave-drift-slow    { animation: am-footer-wave-drift 22s ease-in-out infinite; }
+.am-animate-footer-haze-breathe       { animation: am-footer-haze-breathe 8s ease-in-out infinite; }
+.am-animate-footer-shell-float        { animation: am-footer-shell-float 6s ease-in-out infinite; }
+.am-animate-footer-star-twinkle       { animation: am-footer-star-twinkle 2.8s ease-in-out infinite; }
+.am-animate-footer-shimmer-line       { animation: am-footer-shimmer-line 4s ease-in-out infinite; }
+.am-animate-hero-palm-l               { animation: am-hero-palm-sway 4.8s ease-in-out infinite; transform-origin: 74px 44px; transform-box: fill-box; }
+.am-animate-hero-palm-r               { animation: am-hero-palm-sway-alt 5.4s ease-in-out infinite 0.35s; transform-origin: 74px 44px; transform-box: fill-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  .am-animate-confetti, .am-animate-fade-in-up, .am-animate-bounce-down,
+  .am-animate-pulse-glow, .am-animate-pendulum,
+  .am-animate-footer-wave-drift, .am-animate-footer-wave-drift-reverse,
+  .am-animate-footer-wave-drift-slow, .am-animate-footer-haze-breathe,
+  .am-animate-footer-shell-float, .am-animate-footer-star-twinkle,
+  .am-animate-footer-shimmer-line, .am-animate-hero-palm-l, .am-animate-hero-palm-r {
+    animation: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Sidi Bou Said Template Styles  (prefixed with `sbs-` to avoid conflicts)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.sbs-no-scrollbar::-webkit-scrollbar { display: none; }
+.sbs-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.sbs-shell-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C8A96E' stroke-width='0.8' opacity='0.12'%3E%3Cpath d='M18 92C26 68 39 56 52 56s26 12 34 36c-11 5-22.4 7.5-34 7.5S29 97 18 92Z'/%3E%3Cpath d='M40 84c4-8 8-12 12-12s8 4 12 12'/%3E%3Cpath d='M52 58v34'/%3E%3Cpath d='M0 24Q15 12 30 24T60 24T90 24T120 24' stroke='%236B8FBF'/%3E%3Cpath d='M0 36Q15 24 30 36T60 36T90 36T120 36' stroke='%236B8FBF' stroke-opacity='0.8'/%3E%3Ccircle cx='92' cy='88' r='4' fill='%23F5F7FA' stroke='%23C8A96E'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@keyframes sbs-chevron-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+.sbs-animate-chevron { animation: sbs-chevron-bounce 1.8s ease-in-out infinite; }
+
+@keyframes sbs-scroll-fade {
+  0%   { opacity: 0.15; transform: translateY(-4px); }
+  50%  { opacity: 0.7;  transform: translateY(0); }
+  100% { opacity: 0.15; transform: translateY(4px); }
+}
+
+.sbs-scroll-dot {
+  animation: sbs-scroll-fade 1.4s ease-in-out infinite;
+}
+
+/* Wax seal crack animation */
+@keyframes sbs-seal-crack {
+  0%   { transform: scale(1);    opacity: 1;   filter: blur(0); }
+  15%  { transform: scale(1.18); opacity: 1;   filter: blur(0); }
+  60%  { transform: scale(0.6);  opacity: 0.4; filter: blur(2px); }
+  100% { transform: scale(0.2);  opacity: 0;   filter: blur(6px); }
+}
+
+.sbs-seal-crack {
+  animation: sbs-seal-crack 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+}
+
+/* Sand/sea sweep reveal — overlay slides off to the right */
+.sbs-sand-swept {
+  transform: translateX(105%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sbs-seal-crack  { animation: none !important; opacity: 0 !important; }
+  .sbs-sand-swept  { transform: translateX(105%) !important; transition: none !important; }
+}
+.sbs-mouse {
+  width: 26px;
+  height: 42px;
+  border: 1.5px solid rgba(107, 143, 191, 0.55);
+  border-radius: 13px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.sbs-mouse-wheel {
+  width: 4px;
+  height: 8px;
+  background: #6B8FBF;
+  border-radius: 2px;
+  animation: sbs-wheel-drop 1.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  opacity: 0.7;
+}
+
+@keyframes sbs-wheel-drop {
+  0%   { transform: translateY(0);   opacity: 0.8; }
+  60%  { transform: translateY(12px); opacity: 0.2; }
+  61%  { transform: translateY(0);   opacity: 0; }
+  80%  { opacity: 0.8; }
+  100% { transform: translateY(0);   opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sbs-animate-chevron { animation: none !important; }
+  .sbs-scroll-dot { animation: none !important; }
+  .sbs-mouse-wheel { animation: none !important; }
 }
