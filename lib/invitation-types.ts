@@ -136,7 +136,7 @@ export const ARABIC_MOORISH_DEFAULTS: InvitationData = {
   lang2DresscodeType: '',
   lang2DresscodeMen: '',
   lang2DresscodeWomen: '',
-  musicUrl: '/music/background.mp3',
+  musicUrl: '',
 }
 
 /** Returns the right starter defaults for a given templateId */

@@ -15,7 +15,7 @@ export function useBackgroundMusic({ url, disabled = false, volume = 0.3 }: UseB
 
   // Create audio element
   useEffect(() => {
-    if (disabled || !url) return
+    if (disabled || !url || url === 'pending') return
 
     const audio = new Audio(url)
     audio.loop = true

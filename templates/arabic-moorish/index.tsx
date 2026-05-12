@@ -73,7 +73,7 @@ const ArabicMoorishTemplate = ({ invitationId, data = DEFAULT_INVITATION_DATA, p
           {showMain && (
             <>
               <LanguageToggle />
-              {!previewMode && data.musicUrl && <MusicToggle isMuted={isMuted} onToggle={toggleMute} />}
+              {!previewMode && data.musicUrl && data.musicUrl !== 'pending' && <MusicToggle isMuted={isMuted} onToggle={toggleMute} />}
               <HeroNames />
               <CelebrationDetailsSection />
               <DateLocation showOnly={['wedding']} />

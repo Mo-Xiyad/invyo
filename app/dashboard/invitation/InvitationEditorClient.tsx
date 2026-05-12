@@ -570,7 +570,7 @@ export default function InvitationEditorClient({ userId, invitationId: initialIn
                       <p className="text-[10px] font-semibold uppercase tracking-widest text-lt-muted">Background music</p>
                       <button
                         type="button"
-                        onClick={() => set('musicUrl', (data.musicUrl ? '' : '/music/background.mp3') as never)}
+                        onClick={() => set('musicUrl', (data.musicUrl ? '' : 'pending') as never)}
                         className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none ${
                           data.musicUrl ? 'bg-lt-ink' : 'bg-lt-border'
                         }`}

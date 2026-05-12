@@ -11,7 +11,7 @@ interface MusicTrack {
 }
 
 const DEFAULT_TRACKS = [
-  { id: 'default-1', name: 'Gentle Oud', public_url: '/music/background.mp3', uploaded_by: '', is_public: true },
+  { id: 'default-1', name: 'Gentle Oud', public_url: '', uploaded_by: '', is_public: true },
 ]
 
 interface MusicPickerProps {
