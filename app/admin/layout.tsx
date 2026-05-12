@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
+import AdminSideNav from './AdminSideNav'
 
 function AccessDenied() {
   return (
@@ -41,21 +42,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="min-h-screen bg-lt-subtle text-lt-ink">
-      <header className="border-b border-lt-border bg-lt-surface">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-5 md:px-10">
-          <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-lt-muted">Control panel</p>
-            <h1 className="font-display text-2xl font-extrabold text-lt-ink">Invyo Admin</h1>
-          </div>
-          <Link
-            href="/dashboard"
-            className="rounded-full border border-lt-border px-4 py-2 font-sans text-sm font-semibold text-lt-ink transition-colors hover:bg-lt-subtle"
-          >
-            Back to dashboard
-          </Link>
-        </div>
-      </header>
-      <main className="mx-auto max-w-7xl px-6 py-8 md:px-10 md:py-10">{children}</main>
+      <AdminSideNav />
+      <main className="ml-56 min-h-screen bg-lt-subtle px-8 py-8">{children}</main>
     </div>
   )
 }

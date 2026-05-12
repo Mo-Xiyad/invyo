@@ -16,7 +16,7 @@ import Footer from './Footer'
 import LanguageToggle from './LanguageToggle'
 
 // How many seconds before video end to start the fade
-const FADE_BEFORE_END = 1.8
+const FADE_BEFORE_END = 3.8
 
 type Screen = 'idle' | 'playing' | 'fading' | 'main'
 
@@ -64,12 +64,18 @@ export default function SidiBouSaidTemplate({
   return (
     <InvitationDataProvider data={data} previewMode={previewMode}>
       <RivieraLangProvider controlled={controlledLang}>
-        <div className="sbs-no-scrollbar bg-[#F5F7FA] text-[#1C2B4A]" style={{ fontFamily: "'Caveat', cursive" }}>
+        <div
+          className="sbs-no-scrollbar text-[#1C2B4A] transition-colors duration-1000"
+          style={{
+            fontFamily: "'Caveat', cursive",
+            backgroundColor: screen === 'main' ? '#F5F7FA' : '#10203f',
+          }}
+        >
 
           {/* Main invitation content — always mounted, fades in when ready */}
           <main
             className={`transition-opacity duration-1000 ${
-              screen === 'main' ? 'opacity-100' : 'pointer-events-none opacity-0'
+              screen === 'main' || screen === 'fading' ? 'opacity-100' : 'pointer-events-none opacity-0'
             }`}
           >
             <HeroSection />

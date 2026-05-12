@@ -44,6 +44,8 @@ export interface InvitationData {
   lang2DresscodeType: string
   lang2DresscodeMen: string
   lang2DresscodeWomen: string
+  // Music
+  musicUrl: string
 }
 
 export const DEFAULT_INVITATION_DATA: InvitationData = {
@@ -88,6 +90,7 @@ export const DEFAULT_INVITATION_DATA: InvitationData = {
   lang2DresscodeType: '',
   lang2DresscodeMen: '',
   lang2DresscodeWomen: '',
+  musicUrl: '',
 }
 
 /** Defaults shown when no draft exists for the Arabic Moorish template */
@@ -133,6 +136,7 @@ export const ARABIC_MOORISH_DEFAULTS: InvitationData = {
   lang2DresscodeType: '',
   lang2DresscodeMen: '',
   lang2DresscodeWomen: '',
+  musicUrl: '/music/background.mp3',
 }
 
 /** Returns the right starter defaults for a given templateId */

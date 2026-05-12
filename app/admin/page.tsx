@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
+import AdminTemplateMusicClient from './AdminTemplateMusicClient'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -31,26 +32,6 @@ type AdminInvitation = {
   published_at: string | null
 }
 
-type AdminRsvp = {
-  id: string
-  guest_name: string
-  attending: boolean
-  guests_count: number | null
-  message: string | null
-  invitation_slug: string | null
-  invitation_id: string
-  created_at: string
-}
-
-type AdminUser = {
-  id: string
-  email: string | null
-  full_name: string | null
-  role: 'user' | 'admin'
-  invitation_count: number
-  created_at: string
-}
-
 function formatCurrency(amountInCents: number) {
   return currencyFormatter.format(amountInCents / 100)
 }
@@ -76,29 +57,6 @@ function StatusBadge({ status }: { status: string }) {
   )
 }
 
-function ResponseBadge({ attending, message }: { attending: boolean; message: string | null }) {
-  if (message === 'maybe') {
-    return <span className="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">Maybe</span>
-  }
-
-  if (attending) {
-    return <span className="rounded-full bg-green-50 px-2.5 py-1 text-xs font-semibold text-green-700">Attending</span>
-  }
-
-  return <span className="rounded-full bg-red-50 px-2.5 py-1 text-xs font-semibold text-red-600">Declined</span>
-}
-
-function RoleBadge({ role }: { role: string }) {
-  const classes = role === 'admin'
-    ? 'bg-lt-ink text-lt-surface'
-    : 'bg-lt-subtle text-lt-muted'
-
-  return (
-    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${classes}`}>
-      {role}
-    </span>
-  )
-}
 
 function SectionHeading({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
@@ -114,11 +72,10 @@ function SectionHeading({ title, subtitle }: { title: string; subtitle?: string 
 export default async function AdminPage() {
   const supabase = await createClient()
 
-  const [statsResult, invitationsResult, rsvpsResult, usersResult] = await Promise.all([
+  const [statsResult, invitationsResult, templateSettingsResult] = await Promise.all([
     supabase.rpc('admin_get_stats'),
     supabase.rpc('admin_get_invitations'),
-    supabase.rpc('admin_get_rsvps'),
-    supabase.rpc('admin_get_users'),
+    supabase.from('template_settings').select('template_id, music_url, music_name'),
   ])
 
   const stats = ((statsResult.data ?? [])[0] ?? {
@@ -129,9 +86,15 @@ export default async function AdminPage() {
     total_rsvps: 0,
   }) as AdminStats
   const invitations = (invitationsResult.data ?? []) as AdminInvitation[]
-  const rsvps = (rsvpsResult.data ?? []) as AdminRsvp[]
-  const users = (usersResult.data ?? []) as AdminUser[]
-  const hasError = [statsResult.error, invitationsResult.error, rsvpsResult.error, usersResult.error].some(Boolean)
+  const hasError = [statsResult.error, invitationsResult.error].some(Boolean)
+
+  // Build template music initial state
+  const templateMusicInitial = Object.fromEntries(
+    (templateSettingsResult.data ?? []).map(s => [
+      s.template_id,
+      { musicUrl: s.music_url ?? '', musicName: s.music_name ?? '' },
+    ])
+  )
 
   return (
     <div className="space-y-10">
@@ -158,6 +121,12 @@ export default async function AdminPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Template Music */}
+      <section>
+        <SectionHeading title="Template music" subtitle="Set the background music for each template. Changes take effect immediately on the live preview." />
+        <AdminTemplateMusicClient initial={templateMusicInitial} />
       </section>
 
       <section>
@@ -206,89 +175,6 @@ export default async function AdminPage() {
             </div>
           ) : (
             <div className="px-6 py-12 text-center font-sans text-sm text-lt-muted">No invitations yet.</div>
-          )}
-        </div>
-      </section>
-
-      <section>
-        <SectionHeading
-          title="Recent RSVPs"
-          subtitle={stats.total_rsvps > 100 ? `Showing the latest 100 of ${stats.total_rsvps.toLocaleString()} responses.` : 'Latest RSVP responses across all invitations.'}
-        />
-        <div className="overflow-hidden rounded-2xl border border-lt-border bg-lt-surface">
-          {rsvps.length ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-left">
-                <thead className="bg-lt-subtle">
-                  <tr className="border-b border-lt-border">
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Guest</th>
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Invitation</th>
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Response</th>
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Guests count</th>
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rsvps.map((rsvp, index) => {
-                    const invitationHref = rsvp.invitation_slug ? new URL(`/i/${rsvp.invitation_slug}`, siteUrl).toString() : null
-
-                    return (
-                      <tr key={rsvp.id} className={`border-b border-lt-border last:border-0 ${index % 2 === 0 ? '' : 'bg-lt-subtle/40'}`}>
-                        <td className="px-5 py-4 font-sans text-sm font-semibold text-lt-ink">{rsvp.guest_name}</td>
-                        <td className="px-5 py-4 font-sans text-sm">
-                          {invitationHref ? (
-                            <Link href={invitationHref} target="_blank" className="text-lt-ink underline underline-offset-2">
-                              {rsvp.invitation_slug}
-                            </Link>
-                          ) : (
-                            <span className="text-lt-muted">—</span>
-                          )}
-                        </td>
-                        <td className="px-5 py-4 font-sans text-sm text-lt-ink"><ResponseBadge attending={rsvp.attending} message={rsvp.message} /></td>
-                        <td className="px-5 py-4 font-sans text-sm text-lt-muted">{rsvp.guests_count ?? 1}</td>
-                        <td className="px-5 py-4 font-sans text-sm text-lt-muted">{formatDate(rsvp.created_at)}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="px-6 py-12 text-center font-sans text-sm text-lt-muted">No RSVP responses yet.</div>
-          )}
-        </div>
-      </section>
-
-      <section>
-        <SectionHeading title="Clients" subtitle="User accounts and invitation activity." />
-        <div className="overflow-hidden rounded-2xl border border-lt-border bg-lt-surface">
-          {users.length ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-left">
-                <thead className="bg-lt-subtle">
-                  <tr className="border-b border-lt-border">
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Email</th>
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Name</th>
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Role</th>
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Invitations count</th>
-                    <th className="px-5 py-3 font-sans text-xs font-semibold text-lt-muted">Joined date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((client, index) => (
-                    <tr key={client.id} className={`border-b border-lt-border last:border-0 ${index % 2 === 0 ? '' : 'bg-lt-subtle/40'}`}>
-                      <td className="px-5 py-4 font-sans text-sm text-lt-ink">{client.email ?? '—'}</td>
-                      <td className="px-5 py-4 font-sans text-sm text-lt-muted">{client.full_name ?? '—'}</td>
-                      <td className="px-5 py-4 font-sans text-sm text-lt-ink"><RoleBadge role={client.role} /></td>
-                      <td className="px-5 py-4 font-sans text-sm text-lt-muted">{Number(client.invitation_count ?? 0).toLocaleString()}</td>
-                      <td className="px-5 py-4 font-sans text-sm text-lt-muted">{formatDate(client.created_at)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="px-6 py-12 text-center font-sans text-sm text-lt-muted">No clients found.</div>
           )}
         </div>
       </section>

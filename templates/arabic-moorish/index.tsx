@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { LanguageProvider } from './LanguageContext';
 import { InvitationDataProvider } from './InvitationDataContext';
 import { DEFAULT_INVITATION_DATA } from '@/lib/invitation-types';
 import type { InvitationData } from '@/lib/invitation-types';
+import { useBackgroundMusic } from '@/lib/useBackgroundMusic';
 import EnvelopeScreen from './EnvelopeScreen';
 import HeroNames from './HeroNames';
 import CelebrationDetailsSection from './CelebrationDetailsSection';
@@ -16,7 +17,8 @@ import TimelineSection from './TimelineSection';
 import RSVPSection from './RSVPSection';
 import WeddingFooter from './WeddingFooter';
 import LanguageToggle from './LanguageToggle';
-import ConfettiEffect from './ConfettiEffect';
+import ConfettiEffect from './ConfettiEffect'
+import MusicToggle from './MusicToggle';
 
 type Screen = 'envelope' | 'transitioning' | 'main';
 
@@ -29,36 +31,17 @@ interface ArabicMoorishProps {
 const ArabicMoorishTemplate = ({ invitationId, data = DEFAULT_INVITATION_DATA, previewMode = false }: ArabicMoorishProps) => {
   const [screen, setScreen] = useState<Screen>(previewMode ? 'main' : 'envelope');
   const [shakeConfetti, setShakeConfetti] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    if (previewMode) return;
-    const audio = new Audio('/music/background.mp3');
-    audio.loop = true;
-    audio.volume = 0.3;
-    audio.preload = 'auto';
-    audioRef.current = audio;
-  }, []);
-
-  useEffect(() => {
-    const handleVisibility = () => {
-      const audio = audioRef.current;
-      if (!audio) return;
-      if (document.hidden) {
-        audio.pause();
-      } else if (audio.currentTime > 0) {
-        audio.play().catch(() => {});
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibility);
-    return () => document.removeEventListener('visibilitychange', handleVisibility);
-  }, []);
+  const { play, toggleMute, isMuted } = useBackgroundMusic({
+    url: data.musicUrl || undefined,
+    disabled: previewMode,
+  });
 
   const handleEnvelopeOpen = useCallback(() => {
-    audioRef.current?.play().catch(() => {});
+    play();
     setScreen('transitioning');
     setTimeout(() => setScreen('main'), 1400);
-  }, []);
+  }, [play]);
 
   useEffect(() => {
     let lastX = 0, lastY = 0, lastZ = 0, lastTime = 0;
@@ -85,11 +68,12 @@ const ArabicMoorishTemplate = ({ invitationId, data = DEFAULT_INVITATION_DATA, p
   return (
     <InvitationDataProvider data={data} previewMode={previewMode}>
       <LanguageProvider>
-        <div className="am-no-scrollbar">
+        <div className="am-no-scrollbar min-h-screen">
           {shakeConfetti && <ConfettiEffect />}
           {showMain && (
             <>
               <LanguageToggle />
+              {!previewMode && data.musicUrl && <MusicToggle isMuted={isMuted} onToggle={toggleMute} />}
               <HeroNames />
               <CelebrationDetailsSection />
               <DateLocation showOnly={['wedding']} />

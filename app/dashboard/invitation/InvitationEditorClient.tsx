@@ -7,6 +7,7 @@ import { TEMPLATES } from '@/lib/templates'
 import ArabicMoorishTemplate from '@/templates/arabic-moorish'
 import RivieraDreamsTemplate from '@/templates/riviera-dreams'
 import { createClient } from '@/utils/supabase/client'
+import MusicPicker from '@/components/MusicPicker'
 
 const SECTIONS = [
   { id: 'names',    label: 'Names' },
@@ -563,6 +564,33 @@ export default function InvitationEditorClient({ userId, invitationId: initialIn
                   <div className="space-y-3 rounded-2xl border border-lt-border bg-lt-subtle/50 p-4">
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-lt-muted">RSVP</p>
                     <Field label="RSVP deadline" value={data.rsvpDeadline ?? ''} onChange={v => set('rsvpDeadline', v)} placeholder="e.g. June 1, 2026" />
+                  </div>
+                  <div className="space-y-3 rounded-2xl border border-lt-border bg-lt-subtle/50 p-4">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[10px] font-semibold uppercase tracking-widest text-lt-muted">Background music</p>
+                      <button
+                        type="button"
+                        onClick={() => set('musicUrl', (data.musicUrl ? '' : '/music/background.mp3') as never)}
+                        className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none ${
+                          data.musicUrl ? 'bg-lt-ink' : 'bg-lt-border'
+                        }`}
+                        role="switch"
+                        aria-checked={!!data.musicUrl}
+                      >
+                        <span className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ${
+                          data.musicUrl ? 'translate-x-4' : 'translate-x-0'
+                        }`} />
+                      </button>
+                    </div>
+                    {data.musicUrl ? (
+                      <MusicPicker
+                        value={data.musicUrl}
+                        onChange={v => set('musicUrl', v as never)}
+                        templateId={templateId}
+                      />
+                    ) : (
+                      <p className="font-sans text-xs text-lt-muted">Toggle on to add background music to your invitation.</p>
+                    )}
                   </div>
                   {isRiviera && (
                     <div className="space-y-3 rounded-2xl border border-lt-border bg-lt-subtle/50 p-4">
