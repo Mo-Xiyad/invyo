@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   const bytes = await file.arrayBuffer()
 
   const { error: uploadError } = await supabase.storage
-    .from('music')
+    .from('Music')
     .upload(storagePath, bytes, { contentType: file.type, upsert: false })
 
   if (uploadError) {
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Get public URL
-  const { data: { publicUrl } } = supabase.storage.from('music').getPublicUrl(storagePath)
+  const { data: { publicUrl } } = supabase.storage.from('Music').getPublicUrl(storagePath)
 
   // Save track record to DB
   const { data: track, error: dbError } = await supabase

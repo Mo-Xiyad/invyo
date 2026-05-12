@@ -66,11 +66,11 @@ export default function AdminTemplateMusicClient({ initial }: Props) {
       const path = `template/${templateId}/${Date.now()}.${ext}`
 
       const { error: uploadErr } = await supabase.storage
-        .from('music')
+        .from('Music')
         .upload(path, file, { contentType: file.type || 'audio/mpeg', upsert: true })
       if (uploadErr) throw new Error(uploadErr.message)
 
-      const { data: { publicUrl } } = supabase.storage.from('music').getPublicUrl(path)
+      const { data: { publicUrl } } = supabase.storage.from('Music').getPublicUrl(path)
       const trackName = file.name.replace(/\.[^.]+$/, '')
 
       const res = await fetch('/api/admin/template-settings', {
