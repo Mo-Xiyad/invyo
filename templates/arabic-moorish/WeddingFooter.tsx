@@ -115,7 +115,7 @@ const WeddingFooter = () => {
           {t('With love & blessings,', 'مع الحب والبركة،')}
         </p>
         <p className={`text-2xl md:text-3xl text-[#1A1A2E] mt-1 ${isArabic ? 'font-amiri' : 'font-playfair'}`}>
-          {isArabic ? `${d.groomNameAr} و${d.brideNameAr}` : `${d.groomNameEn} & ${d.brideNameEn}`}
+          {isArabic ? `${d.groomNameAr} و${d.brideNameAr}` : `${d.groomNameEn}${d.groomLastNameEn ? ` ${d.groomLastNameEn}` : ''} & ${d.brideNameEn}${d.brideLastNameEn ? ` ${d.brideLastNameEn}` : ''}`}
         </p>
 
         <p className={`mt-6 text-sm text-[#3D6B5E]/45 ${isArabic ? 'font-amiri text-base' : 'font-lato tracking-wide'}`}>

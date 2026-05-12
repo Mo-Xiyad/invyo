@@ -309,7 +309,7 @@ const HeroNames = () => {
           </h1>
         ) : (
           <h1 className="font-playfair text-[38px] md:text-5xl text-[#1A1A2E] tracking-wide text-center leading-tight">
-            {d.groomNameEn}
+            {d.groomNameEn}{d.groomLastNameEn ? ` ${d.groomLastNameEn}` : ''}
           </h1>
         )}
 
@@ -329,7 +329,7 @@ const HeroNames = () => {
           </h2>
         ) : (
           <h2 className="font-playfair text-[38px] md:text-5xl text-[#1A1A2E] tracking-wide text-center leading-tight">
-            {d.brideNameEn}
+            {d.brideNameEn}{d.brideLastNameEn ? ` ${d.brideLastNameEn}` : ''}
           </h2>
         )}
       </div>

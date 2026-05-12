@@ -48,10 +48,10 @@ export interface InvitationData {
 
 export const DEFAULT_INVITATION_DATA: InvitationData = {
   groomNameEn: 'James',
-  groomLastNameEn: '',
+  groomLastNameEn: 'Harrison',
   groomNameAr: 'جيمس',
   brideNameEn: 'Emma',
-  brideLastNameEn: '',
+  brideLastNameEn: 'Sullivan',
   brideNameAr: 'إيما',
   weddingDate: 'June 27',
   weddingDateAr: '27 جوان',
@@ -93,10 +93,10 @@ export const DEFAULT_INVITATION_DATA: InvitationData = {
 /** Defaults shown when no draft exists for the Arabic Moorish template */
 export const ARABIC_MOORISH_DEFAULTS: InvitationData = {
   groomNameEn: 'Omar',
-  groomLastNameEn: '',
+  groomLastNameEn: 'Mahmoud',
   groomNameAr: 'عمر محمود',
   brideNameEn: 'Layla',
-  brideLastNameEn: '',
+  brideLastNameEn: 'Mansour',
   brideNameAr: 'ليلى منصور',
   weddingDate: 'June 27',
   weddingDateAr: '27 جوان',
