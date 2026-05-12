@@ -66,19 +66,27 @@ function ScratchCard({ dateString, onReveal }: { dateString: string; onReveal: (
     ctx.fillText('✦  scratch to reveal  ✦', W / 2, H / 2 + 5)
   }
 
-  // Measure container and size canvas to match — runs after paint
+  // Measure container and size canvas to match — only draws surface on first paint
   useEffect(() => {
     const container = containerRef.current
     const canvas = canvasRef.current
     if (!container || !canvas) return
 
+    let initialised = false
+
     const resize = () => {
       const W = container.offsetWidth
       const H = container.offsetHeight
       if (W === 0 || H === 0) return
-      canvas.width = W
-      canvas.height = H
-      drawSurface(canvas)
+      // Only redraw the surface on the very first measurement.
+      // Subsequent resizes (e.g. mobile browser chrome hiding) just
+      // update the canvas dimensions without resetting scratched pixels.
+      if (!initialised) {
+        canvas.width = W
+        canvas.height = H
+        drawSurface(canvas)
+        initialised = true
+      }
     }
 
     resize()
