@@ -6,6 +6,7 @@ import TemplatesTeaser from '@/components/TemplatesTeaser'
 import ClosingSection from '@/components/ClosingSection'
 import FAQSection from '@/components/FAQSection'
 import SiteFooter from '@/components/SiteFooter'
+import { createClient } from '@/utils/supabase/server'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.invyo.uk'
 
@@ -18,7 +19,16 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient()
+  const { data: settings } = await supabase
+    .from('template_settings')
+    .select('template_id, image_url')
+
+  const imageMap = Object.fromEntries(
+    (settings ?? []).map(s => [s.template_id, s.image_url ?? ''])
+  )
+
   return (
     <>
       <NavBar />
@@ -44,7 +54,7 @@ export default function Home() {
           }}
         />
         <HeroSection />
-        <TemplatesTeaser />
+        <TemplatesTeaser imageMap={imageMap} />
         <FeatureSection
           variant="create"
           imagePosition="left"

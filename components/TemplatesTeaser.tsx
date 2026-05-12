@@ -7,7 +7,11 @@ import { useInView } from 'framer-motion'
 import { TEMPLATES } from '@/lib/templates'
 import TemplateCard from './TemplateCard'
 
-export default function TemplatesTeaser() {
+interface TemplatesTeaserProps {
+  imageMap?: Record<string, string>
+}
+
+export default function TemplatesTeaser({ imageMap = {} }: TemplatesTeaserProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -60,7 +64,7 @@ export default function TemplatesTeaser() {
         {/* Cards */}
         <div className="mt-10 grid grid-cols-2 gap-5 lg:max-w-2xl">
           {featuredTemplates.map((t, i) => (
-            <TemplateCard key={t.id} config={t} index={i} />
+            <TemplateCard key={t.id} config={t} index={i} imageUrl={imageMap[t.id] || undefined} />
           ))}
         </div>
 
