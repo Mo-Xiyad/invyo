@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
-import AdminTemplateMusicClient from './AdminTemplateMusicClient'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -72,10 +71,9 @@ function SectionHeading({ title, subtitle }: { title: string; subtitle?: string 
 export default async function AdminPage() {
   const supabase = await createClient()
 
-  const [statsResult, invitationsResult, templateSettingsResult] = await Promise.all([
+  const [statsResult, invitationsResult] = await Promise.all([
     supabase.rpc('admin_get_stats'),
     supabase.rpc('admin_get_invitations'),
-    supabase.from('template_settings').select('template_id, music_url, music_name'),
   ])
 
   const stats = ((statsResult.data ?? [])[0] ?? {
@@ -87,14 +85,6 @@ export default async function AdminPage() {
   }) as AdminStats
   const invitations = (invitationsResult.data ?? []) as AdminInvitation[]
   const hasError = [statsResult.error, invitationsResult.error].some(Boolean)
-
-  // Build template music initial state
-  const templateMusicInitial = Object.fromEntries(
-    (templateSettingsResult.data ?? []).map(s => [
-      s.template_id,
-      { musicUrl: s.music_url ?? '', musicName: s.music_name ?? '' },
-    ])
-  )
 
   return (
     <div className="space-y-10">
@@ -123,11 +113,7 @@ export default async function AdminPage() {
         </div>
       </section>
 
-      {/* Template Music */}
-      <section>
-        <SectionHeading title="Template music" subtitle="Set the background music for each template. Changes take effect immediately on the live preview." />
-        <AdminTemplateMusicClient initial={templateMusicInitial} />
-      </section>
+      {/* Template music is managed in the Templates tab */}
 
       <section>
         <SectionHeading title="Invitations" subtitle="All invitation records across the platform." />
