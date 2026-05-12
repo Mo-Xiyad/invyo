@@ -5,12 +5,19 @@ import { createClient } from '@/utils/supabase/client'
 import { TEMPLATES } from '@/lib/templates'
 
 interface TrackState { musicUrl: string; musicName: string }
-interface Props { initial: Record<string, TrackState> }
+interface ImageState { imageUrl: string; imageName: string }
+interface Props {
+  initial: Record<string, TrackState>
+  initialImages: Record<string, ImageState>
+}
 
 const activeTemplates = TEMPLATES.filter(t => t.id !== 'coming-soon')
 const MAX_MB = 15
 const ALLOWED_EXTS = ['.mp3', '.wav', '.ogg', '.aac', '.m4a']
 const ALLOWED_TYPES = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/ogg', 'audio/aac', 'audio/x-m4a']
+const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.webp', '.avif']
+const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+const IMAGE_MAX_MB = 5
 
 function friendlyError(err: unknown): string {
   const msg = err instanceof Error ? err.message : String(err)
@@ -30,14 +37,19 @@ function validateFile(file: File): string | null {
   return null
 }
 
-export default function AdminTemplateMusicClient({ initial }: Props) {
+export default function AdminTemplateMusicClient({ initial, initialImages }: Props) {
   const [tracks, setTracks] = useState<Record<string, TrackState>>(initial)
+  const [images, setImages] = useState<Record<string, ImageState>>(initialImages)
   const [uploading, setUploading] = useState<string | null>(null)
+  const [uploadingImage, setUploadingImage] = useState<string | null>(null)
   const [dragging, setDragging] = useState<string | null>(null)
+  const [draggingImage, setDraggingImage] = useState<string | null>(null)
   const [previewing, setPreviewing] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [imageErrors, setImageErrors] = useState<Record<string, string>>({})
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const fileRefs = useRef<Record<string, HTMLInputElement | null>>({})
+  const imageRefs = useRef<Record<string, HTMLInputElement | null>>({})
 
   function handlePreview(templateId: string, url: string) {
     if (previewing === templateId) {
@@ -108,6 +120,54 @@ export default function AdminTemplateMusicClient({ initial }: Props) {
     }
   }
 
+  const handleImageUpload = useCallback(async (templateId: string, file: File) => {
+    setImageErrors(e => ({ ...e, [templateId]: '' }))
+    const isValid = IMAGE_TYPES.includes(file.type) || IMAGE_EXTS.some(ext => file.name.toLowerCase().endsWith(ext))
+    if (!isValid) { setImageErrors(e => ({ ...e, [templateId]: `Use ${IMAGE_EXTS.join(', ')}.` })); return }
+    if (file.size > IMAGE_MAX_MB * 1024 * 1024) { setImageErrors(e => ({ ...e, [templateId]: `Max ${IMAGE_MAX_MB}MB. Your file is ${(file.size / 1024 / 1024).toFixed(1)}MB.` })); return }
+
+    setUploadingImage(templateId)
+    try {
+      const supabase = createClient()
+      const ext = file.name.split('.').pop() ?? 'jpg'
+      const path = `images/template/${templateId}/${Date.now()}.${ext}`
+      const { error: uploadErr } = await supabase.storage.from('Music').upload(path, file, { contentType: file.type, upsert: true })
+      if (uploadErr) throw new Error(uploadErr.message)
+      const { data: { publicUrl } } = supabase.storage.from('Music').getPublicUrl(path)
+      const imageName = file.name.replace(/\.[^.]+$/, '')
+      const res = await fetch('/api/admin/template-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ templateId, imageUrl: publicUrl, imageName }),
+      })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error ?? 'Failed to save')
+      setImages(i => ({ ...i, [templateId]: { imageUrl: publicUrl, imageName } }))
+    } catch (err) {
+      setImageErrors(e => ({ ...e, [templateId]: friendlyError(err) }))
+    } finally {
+      setUploadingImage(null)
+      if (imageRefs.current[templateId]) imageRefs.current[templateId]!.value = ''
+    }
+  }, [])
+
+  async function handleImageClear(templateId: string) {
+    setUploadingImage(templateId)
+    try {
+      const res = await fetch('/api/admin/template-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ templateId, imageUrl: '', imageName: '' }),
+      })
+      if (!res.ok) throw new Error('Failed to remove image')
+      setImages(i => ({ ...i, [templateId]: { imageUrl: '', imageName: '' } }))
+    } catch (err) {
+      setImageErrors(e => ({ ...e, [templateId]: friendlyError(err) }))
+    } finally {
+      setUploadingImage(null)
+    }
+  }
+
   function onDragOver(e: React.DragEvent, templateId: string) {
     e.preventDefault()
     setDragging(templateId)
@@ -122,12 +182,29 @@ export default function AdminTemplateMusicClient({ initial }: Props) {
     if (file) handleUpload(templateId, file)
   }
 
+  function onImageDragOver(e: React.DragEvent, templateId: string) {
+    e.preventDefault()
+    setDraggingImage(templateId)
+  }
+  function onImageDragLeave(e: React.DragEvent) {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) setDraggingImage(null)
+  }
+  function onImageDrop(e: React.DragEvent, templateId: string) {
+    e.preventDefault()
+    setDraggingImage(null)
+    const file = e.dataTransfer.files[0]
+    if (file) handleImageUpload(templateId, file)
+  }
+
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       {activeTemplates.map(template => {
         const track = tracks[template.id] ?? { musicUrl: '', musicName: '' }
+        const image = images[template.id] ?? { imageUrl: '', imageName: '' }
         const isBusy = uploading === template.id
+        const isBusyImage = uploadingImage === template.id
         const isDragging = dragging === template.id
+        const isDraggingImage = draggingImage === template.id
         const isPreviewing = previewing === template.id
 
         return (
@@ -228,6 +305,90 @@ export default function AdminTemplateMusicClient({ initial }: Props) {
                 <p className="font-sans text-[11px] leading-relaxed text-red-700">{errors[template.id]}</p>
               </div>
             )}
+
+            {/* ── Card Image ─────────────────────────────────── */}
+            <div className="mt-5 border-t border-lt-border pt-4">
+              <p className="mb-2 font-sans text-xs font-semibold text-lt-ink">Card image</p>
+
+              {image.imageUrl ? (
+                <div className="mb-3 flex items-center gap-3 rounded-xl border border-lt-border bg-lt-subtle px-3 py-2.5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={image.imageUrl} alt="Card preview" className="h-12 w-16 flex-shrink-0 rounded object-cover" />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-sans text-xs font-semibold text-lt-ink">{image.imageName || 'Card image'}</p>
+                    <p className="font-sans text-[10px] text-lt-muted">Shown in template gallery</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleImageClear(template.id)}
+                    disabled={isBusyImage}
+                    className="font-sans text-[10px] font-semibold text-red-500 hover:text-red-700 disabled:opacity-40"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <div className="mb-3 rounded-xl border border-lt-border bg-lt-subtle px-3 py-2.5">
+                  <p className="font-sans text-xs text-lt-muted">No image — SVG preview shown in gallery.</p>
+                </div>
+              )}
+
+              <input
+                ref={el => { imageRefs.current[template.id] = el }}
+                type="file"
+                accept={IMAGE_EXTS.join(',')}
+                className="hidden"
+                onChange={e => { const f = e.target.files?.[0]; if (f) handleImageUpload(template.id, f) }}
+              />
+              <button
+                type="button"
+                disabled={isBusyImage}
+                onClick={() => !isBusyImage && imageRefs.current[template.id]?.click()}
+                onDragOver={e => onImageDragOver(e, template.id)}
+                onDragLeave={onImageDragLeave}
+                onDrop={e => onImageDrop(e, template.id)}
+                className={[
+                  'flex w-full flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed py-4 transition-colors',
+                  isBusyImage ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+                  isDraggingImage
+                    ? 'border-lt-ink bg-lt-subtle/80 text-lt-ink'
+                    : 'border-lt-border text-lt-muted hover:border-lt-ink hover:text-lt-ink',
+                ].join(' ')}
+              >
+                {isBusyImage ? (
+                  <>
+                    <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 12a9 9 0 11-6.219-8.56" strokeLinecap="round" />
+                    </svg>
+                    <span className="font-sans text-xs font-semibold">Uploading…</span>
+                  </>
+                ) : isDraggingImage ? (
+                  <>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 19V5M5 12l7-7 7 7" />
+                    </svg>
+                    <span className="font-sans text-xs font-semibold">Drop to upload</span>
+                  </>
+                ) : (
+                  <>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" />
+                    </svg>
+                    <span className="font-sans text-xs font-semibold">{image.imageUrl ? 'Replace image' : 'Upload image'}</span>
+                    <span className="font-sans text-[10px] text-lt-muted">Drag & drop or click · JPG, PNG, WebP · max {IMAGE_MAX_MB}MB</span>
+                  </>
+                )}
+              </button>
+
+              {imageErrors[template.id] && (
+                <div className="mt-2 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5">
+                  <svg className="mt-px h-3.5 w-3.5 flex-shrink-0 text-red-500" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 3.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zm.75 7a.875.875 0 110-1.75.875.875 0 010 1.75z" />
+                  </svg>
+                  <p className="font-sans text-[11px] leading-relaxed text-red-700">{imageErrors[template.id]}</p>
+                </div>
+              )}
+            </div>
           </div>
         )
       })}

@@ -4,6 +4,7 @@ import { TEMPLATES } from '@/lib/templates'
 import TemplateCard from '@/components/TemplateCard'
 import NavBar from '@/components/NavBar'
 import SiteFooter from '@/components/SiteFooter'
+import { createClient } from '@/utils/supabase/server'
 
 export const metadata: Metadata = {
   title: 'Wedding Invitation Templates',
@@ -12,7 +13,16 @@ export const metadata: Metadata = {
   alternates: { canonical: '/templates' },
 }
 
-export default function TemplatesPage() {
+export default async function TemplatesPage() {
+  const supabase = await createClient()
+  const { data: settings } = await supabase
+    .from('template_settings')
+    .select('template_id, image_url')
+
+  const imageMap = Object.fromEntries(
+    (settings ?? []).map(s => [s.template_id, s.image_url ?? ''])
+  )
+
   const real = TEMPLATES.filter(t => t.id !== 'coming-soon')
   const comingSoon = TEMPLATES.find(t => t.id === 'coming-soon')
 
@@ -47,7 +57,7 @@ export default function TemplatesPage() {
           <div className="mx-auto max-w-7xl px-5 md:px-8">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {real.map((t, i) => (
-                <TemplateCard key={t.id} config={t} index={i} />
+                <TemplateCard key={t.id} config={t} index={i} imageUrl={imageMap[t.id] || undefined} />
               ))}
               {comingSoon && (
                 <TemplateCard key={comingSoon.id} config={comingSoon} index={real.length} />
