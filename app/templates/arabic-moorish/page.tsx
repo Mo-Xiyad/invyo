@@ -7,5 +7,13 @@ export const metadata: Metadata = {
 };
 
 export default function ArabicMoorishPreviewPage() {
-  return <ArabicMoorishTemplate />;
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-start justify-center sm:py-12">
+      <div
+        className="w-full sm:w-[390px] sm:min-h-[844px] sm:shadow-2xl sm:overflow-hidden"
+      >
+        <ArabicMoorishTemplate />
+      </div>
+    </div>
+  );
 }

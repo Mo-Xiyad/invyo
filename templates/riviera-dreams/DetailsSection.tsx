@@ -2,7 +2,8 @@
 
 import { useInvitationData } from '../arabic-moorish/InvitationDataContext'
 
-const sbs = { fontFamily: "'Amarna', serif" }
+const sbs = { fontFamily: "'Caveat', cursive" }
+const sat = { fontFamily: "'Satisfy', cursive" }
 
 export default function DetailsSection() {
   const data = useInvitationData()
@@ -34,7 +35,7 @@ export default function DetailsSection() {
                 </p>
               )}
 
-              <p className="text-[26px] font-light leading-tight text-[#1C2B4A]" style={sbs}>
+              <p className="text-[26px] font-light leading-tight text-[#1C2B4A]" style={sat}>
                 {item.event}
               </p>
             </li>

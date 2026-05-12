@@ -4,7 +4,7 @@ import { useRivieraLang } from './LanguageContext'
 import { useInvitationData } from '../arabic-moorish/InvitationDataContext'
 import { usePreviewMode } from '../arabic-moorish/InvitationDataContext'
 
-const sbs = { fontFamily: "'Amarna', serif" }
+const sbs = { fontFamily: "'Caveat', cursive" }
 
 export default function LanguageToggle() {
   const { activeLang, setActiveLang } = useRivieraLang()

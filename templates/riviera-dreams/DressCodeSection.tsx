@@ -2,7 +2,8 @@
 
 import { useInvitationData } from '../arabic-moorish/InvitationDataContext'
 
-const sbs = { fontFamily: "'Amarna', serif" }
+const sbs = { fontFamily: "'Caveat', cursive" }
+const sat = { fontFamily: "'Satisfy', cursive" }
 
 function SuitIcon() {
   return (
@@ -67,7 +68,7 @@ export default function DressCodeSection() {
             dress code
           </p>
           {data.dresscodeType && (
-            <p className="mt-3 text-[28px] font-light text-[#1C2B4A]" style={sbs}>
+            <p className="mt-3 text-[28px] font-light text-[#1C2B4A]" style={sat}>
               {data.dresscodeType}
             </p>
           )}

@@ -4,7 +4,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useInvitationData } from '../arabic-moorish/InvitationDataContext'
 import { useRivieraLang } from './LanguageContext'
 
-const sbs = { fontFamily: "'Amarna', serif" }
+const sbs = { fontFamily: "'Caveat', cursive" }
+const sat = { fontFamily: "'Satisfy', cursive" }
 
 function getTargetTime(weddingDate: string, weddingYear: string, weddingTime: string) {
   const parsed = new Date(`${weddingDate}, ${weddingYear} ${weddingTime || '19:00'}`)
@@ -134,7 +135,7 @@ export default function EventDateSection() {
               <div className="flex flex-col items-center border-2 border-[#6B8FBF]/30 rounded-2xl px-4 py-3">
                 <span
                   className="text-[48px] font-light leading-none text-[#1C2B4A]"
-                  style={sbs}
+                  style={sat}
                   suppressHydrationWarning
                 >
                   {mounted ? unit.value : '00'}

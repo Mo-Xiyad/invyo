@@ -8,5 +8,14 @@ export const metadata: Metadata = {
 }
 
 export default function SidiBouSaidPreviewPage() {
-  return <SidiBouSaidTemplate data={DEFAULT_INVITATION_DATA} />
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-start justify-center sm:py-12">
+      {/* transform: translateZ(0) makes this a containing block for position:fixed children */}
+      <div
+        className="w-full sm:w-[390px] sm:min-h-[844px] sm:shadow-2xl sm:overflow-hidden"
+      >
+        <SidiBouSaidTemplate data={DEFAULT_INVITATION_DATA} />
+      </div>
+    </div>
+  )
 }

@@ -26,12 +26,12 @@ export default function CoupleSection() {
 
         {/* Names + quote overlay */}
         <div className="-mt-8 relative z-20 text-center pb-10">
-          <p className="text-2xl italic text-[#1C2B4A]">
+          <p className="text-2xl italic text-[#1C2B4A]" style={{ fontFamily: "'Satisfy', cursive" }}>
             {data.groomNameEn}
             <span className="mx-3 text-[#C8A96E]">&amp;</span>
             {data.brideNameEn}
           </p>
-          <p className="mt-3 text-sm text-[#1C2B4A]/50 italic">
+          <p className="mt-3 text-sm text-[#1C2B4A]/50 italic" style={{ fontFamily: "'Caveat', cursive" }}>
             Two souls, one love, one lifetime.
           </p>
           {data.hashtag && (

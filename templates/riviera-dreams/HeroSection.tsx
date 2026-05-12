@@ -2,7 +2,8 @@
 
 import { useInvitationData, usePreviewMode } from '../arabic-moorish/InvitationDataContext'
 
-const sbs = { fontFamily: "'Amarna', serif" }
+const sbs = { fontFamily: "'Caveat', cursive" }
+const sat = { fontFamily: "'Satisfy', cursive" }
 
 export default function HeroSection() {
   const previewMode = usePreviewMode()
@@ -28,15 +29,15 @@ export default function HeroSection() {
           invite you to celebrate
         </p>
 
-        <h1 className="mt-3 text-[38px] font-light leading-[1.1] text-[#1C2B4A]" style={sbs}>
+        <h1 className="mt-3 text-[38px] font-light leading-[1.1] text-[#1C2B4A]" style={sat}>
           {data.groomNameEn}{data.groomLastNameEn ? ` ${data.groomLastNameEn}` : ''}
         </h1>
 
-        <p className="text-[22px] font-light italic leading-none text-[#6B8FBF]" style={sbs}>
+        <p className="text-[22px] font-light italic leading-none text-[#6B8FBF]" style={sat}>
           &amp;
         </p>
 
-        <h2 className="text-[38px] font-light leading-[1.1] text-[#1C2B4A]" style={sbs}>
+        <h2 className="text-[38px] font-light leading-[1.1] text-[#1C2B4A]" style={sat}>
           {data.brideNameEn}{data.brideLastNameEn ? ` ${data.brideLastNameEn}` : ''}
         </h2>
       </div>

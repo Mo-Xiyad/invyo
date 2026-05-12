@@ -3,7 +3,8 @@
 import { useInvitationData } from '../arabic-moorish/InvitationDataContext'
 import { useRivieraLang } from './LanguageContext'
 
-const sbs = { fontFamily: "'Amarna', serif" }
+const sbs = { fontFamily: "'Caveat', cursive" }
+const sat = { fontFamily: "'Satisfy', cursive" }
 
 function PinIcon() {
   return (
@@ -44,7 +45,7 @@ function VenueBlock({ label, venue, city, mapsUrl }: VenueBlockProps) {
       <p className="text-[10px] uppercase tracking-[0.45em] text-[#6B8FBF]" style={sbs}>
         {label}
       </p>
-      <p className="mt-2 text-[26px] font-light leading-tight text-[#1C2B4A]" style={sbs}>
+      <p className="mt-2 text-[26px] font-light leading-tight text-[#1C2B4A]" style={sat}>
         {venue}
       </p>
       {city && (

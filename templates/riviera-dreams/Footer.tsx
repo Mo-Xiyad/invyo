@@ -15,7 +15,7 @@ export default function Footer() {
           </svg>
           <div className="h-px flex-1 bg-[#6B8FBF]/25" />
         </div>
-        <p className="text-4xl text-[#1C2B4A]">
+        <p className="text-4xl text-[#1C2B4A]" style={{ fontFamily: "'Satisfy', cursive" }}>
           {data.groomNameEn} &amp; {data.brideNameEn}
         </p>
         {data.hashtag && (

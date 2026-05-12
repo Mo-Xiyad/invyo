@@ -259,7 +259,7 @@ export default function TemplateCard({ config, index = 0, animate = true }: Temp
     : `/auth/sign-up?template=${config.id}`
 
   const card = (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-lt-border bg-lt-surface shadow-[0_4px_24px_-6px_rgba(27,33,26,0.10)] transition-all duration-300 hover:shadow-[0_12px_40px_-8px_rgba(27,33,26,0.18)] hover:-translate-y-1">
+    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-lt-border bg-lt-surface shadow-[0_4px_24px_-6px_rgba(27,33,26,0.10)] transition-all duration-300 hover:shadow-[0_12px_40px_-8px_rgba(27,33,26,0.18)] hover:-translate-y-1">
       {/* Preview frame — fixed compact height */}
       <div className="relative h-52 w-full overflow-hidden bg-lt-subtle">
         <TemplatePreview config={config} />
@@ -324,6 +324,7 @@ export default function TemplateCard({ config, index = 0, animate = true }: Temp
 
   return (
     <motion.div
+      className="h-full"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}

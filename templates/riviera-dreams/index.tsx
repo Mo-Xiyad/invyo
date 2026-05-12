@@ -64,7 +64,7 @@ export default function SidiBouSaidTemplate({
   return (
     <InvitationDataProvider data={data} previewMode={previewMode}>
       <RivieraLangProvider controlled={controlledLang}>
-        <div className="sbs-no-scrollbar bg-[#F5F7FA] text-[#1C2B4A]" style={{ fontFamily: "'Amarna', serif" }}>
+        <div className="sbs-no-scrollbar bg-[#F5F7FA] text-[#1C2B4A]" style={{ fontFamily: "'Caveat', cursive" }}>
 
           {/* Main invitation content — always mounted, fades in when ready */}
           <main
