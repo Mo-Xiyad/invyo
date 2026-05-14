@@ -73,11 +73,9 @@ export default function TemplateCard({ config, index = 0, animate = true, imageU
 
       {/* Info */}
       <div className="flex flex-1 flex-col p-4">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-display text-base font-extrabold leading-tight tracking-tight text-lt-ink">
-            {config.name}
-          </h3>
-        </div>
+        <h3 className="font-display text-base font-extrabold leading-tight tracking-tight text-lt-ink">
+          {config.name}
+        </h3>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {config.tags.map(tag => (
             <span key={tag} className="rounded-full border border-lt-border px-2 py-0.5 font-sans text-[10px] font-semibold text-lt-muted">
@@ -85,7 +83,7 @@ export default function TemplateCard({ config, index = 0, animate = true, imageU
             </span>
           ))}
         </div>
-        <p className="mt-3 font-sans text-xs leading-relaxed text-lt-muted line-clamp-3">
+        <p className="mt-3 flex-1 font-sans text-xs leading-relaxed text-lt-muted line-clamp-3">
           {config.description}
         </p>
 
