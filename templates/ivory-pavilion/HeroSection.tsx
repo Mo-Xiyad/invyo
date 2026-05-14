@@ -22,7 +22,7 @@ export default function HeroSection() {
       />
 
       {/* Text overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center translate-y-[-70px] sm:translate-y-[-100px]">
         <p
           className="ivory-slide-up text-[10px] uppercase tracking-[0.35em] text-[#827B6F]"
           style={{ ...serif, animationDelay: '0.05s' }}
