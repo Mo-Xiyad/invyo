@@ -16,7 +16,7 @@ export default function TemplatesTeaser({ imageMap = {} }: TemplatesTeaserProps)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   // Show only the real templates (not the coming-soon placeholder)
-  const featuredTemplates = TEMPLATES.filter(t => t.id !== 'coming-soon').slice(0, 2)
+  const featuredTemplates = TEMPLATES.filter(t => t.id !== 'coming-soon').slice(0, 3)
 
   return (
     <section ref={ref} className="bg-lt-subtle py-14 md:py-20 overflow-hidden">
@@ -62,7 +62,7 @@ export default function TemplatesTeaser({ imageMap = {} }: TemplatesTeaserProps)
         </div>
 
         {/* Cards */}
-        <div className="mt-10 grid grid-cols-2 gap-5 lg:max-w-2xl">
+        <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-3 lg:max-w-4xl">
           {featuredTemplates.map((t, i) => (
             <TemplateCard key={t.id} config={t} index={i} imageUrl={imageMap[t.id] || undefined} />
           ))}
