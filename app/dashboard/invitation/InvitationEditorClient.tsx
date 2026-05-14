@@ -5,6 +5,7 @@ import { DEFAULT_INVITATION_DATA } from '@/lib/invitation-types'
 import type { InvitationData } from '@/lib/invitation-types'
 import { TEMPLATES } from '@/lib/templates'
 import ArabicMoorishTemplate from '@/templates/arabic-moorish'
+import IvoryPavilionTemplate from '@/templates/ivory-pavilion'
 import RivieraDreamsTemplate from '@/templates/riviera-dreams'
 import { createClient } from '@/utils/supabase/client'
 import MusicPicker from '@/components/MusicPicker'
@@ -278,6 +279,7 @@ export default function InvitationEditorClient({ userId, invitationId: initialIn
     'Save draft'
 
   const isRiviera = templateId === 'riviera-dreams'
+  const usesArabicFields = templateId === 'arabic-moorish'
   const selectedTemplate = TEMPLATES.find(t => t.id === templateId)
 
   function renderTemplatePreview() {
@@ -289,6 +291,10 @@ export default function InvitationEditorClient({ userId, invitationId: initialIn
           controlledLang={{ value: previewLang, onChange: setPreviewLang }}
         />
       )
+    }
+
+    if (templateId === 'ivory-pavilion') {
+      return <IvoryPavilionTemplate data={data} previewMode />
     }
 
     return <ArabicMoorishTemplate data={data} previewMode />
@@ -378,9 +384,9 @@ export default function InvitationEditorClient({ userId, invitationId: initialIn
                 </h3>
                 <p className="mt-1 font-sans text-xs text-lt-muted">
                   {activeSection === 'names'
-                    ? isRiviera
-                      ? "Enter the couple's names."
-                      : 'Enter names in both English and Arabic.'
+                    ? usesArabicFields
+                      ? 'Enter names in both English and Arabic.'
+                      : "Enter the couple's names."
                     : activeSection === 'wedding'
                     ? 'When and where is the wedding?'
                     : activeSection === 'timeline'
@@ -396,7 +402,7 @@ export default function InvitationEditorClient({ userId, invitationId: initialIn
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-lt-muted">Groom</p>
                     <Field label="First name" value={data.groomNameEn} onChange={v => set('groomNameEn', v)} placeholder="James" />
                     <Field label="Last name" value={data.groomLastNameEn ?? ''} onChange={v => set('groomLastNameEn', v)} placeholder="Anderson" />
-                    {!isRiviera && (
+                    {usesArabicFields && (
                       <Field label="Arabic name" value={data.groomNameAr} onChange={v => set('groomNameAr', v)} placeholder="عمر محمود" dir="rtl" />
                     )}
                   </div>
@@ -404,7 +410,7 @@ export default function InvitationEditorClient({ userId, invitationId: initialIn
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-lt-muted">Bride</p>
                     <Field label="First name" value={data.brideNameEn} onChange={v => set('brideNameEn', v)} placeholder="Emma" />
                     <Field label="Last name" value={data.brideLastNameEn ?? ''} onChange={v => set('brideLastNameEn', v)} placeholder="Sullivan" />
-                    {!isRiviera && (
+                    {usesArabicFields && (
                       <Field label="Arabic name" value={data.brideNameAr} onChange={v => set('brideNameAr', v)} placeholder="ليلى منصور" dir="rtl" />
                     )}
                   </div>
@@ -416,26 +422,28 @@ export default function InvitationEditorClient({ userId, invitationId: initialIn
                   <div className="space-y-3 rounded-2xl border border-lt-border bg-lt-subtle/50 p-4">
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-lt-muted">Date & time</p>
                     <Field label="Date" value={data.weddingDate} onChange={v => set('weddingDate', v)} placeholder="June 27" />
-                    {!isRiviera && (
+                    {usesArabicFields && (
                       <Field label="Date — Arabic" value={data.weddingDateAr} onChange={v => set('weddingDateAr', v)} placeholder="27 جوان" dir="rtl" />
                     )}
                     <Field label="Year" value={data.weddingYear} onChange={v => set('weddingYear', v)} placeholder="2026" />
                     <Field label="Time" value={data.weddingTime} onChange={v => set('weddingTime', v)} placeholder="20:00" />
-                    {!isRiviera && (
+                    {usesArabicFields ? (
                       <>
                         <Field label="Day — English" value={data.weddingDay} onChange={v => set('weddingDay', v)} placeholder="Saturday" />
                         <Field label="Day — Arabic" value={data.weddingDayAr} onChange={v => set('weddingDayAr', v)} placeholder="السبت" dir="rtl" />
                       </>
+                    ) : (
+                      <Field label="Day" value={data.weddingDay} onChange={v => set('weddingDay', v)} placeholder="Saturday" />
                     )}
                   </div>
                   <div className="space-y-3 rounded-2xl border border-lt-border bg-lt-subtle/50 p-4">
                     <p className="text-[10px] font-semibold uppercase tracking-widest text-lt-muted">Ceremony</p>
                     <Field label="City" value={data.cityEn} onChange={v => set('cityEn', v)} placeholder="Santorini" />
-                    {!isRiviera && (
+                    {usesArabicFields && (
                       <Field label="City — Arabic" value={data.cityAr} onChange={v => set('cityAr', v)} placeholder="تونس" dir="rtl" />
                     )}
                     <Field label="Venue" value={data.venueEn} onChange={v => set('venueEn', v)} placeholder="Venue name" />
-                    {!isRiviera && (
+                    {usesArabicFields && (
                       <Field label="Venue — Arabic" value={data.venueAr} onChange={v => set('venueAr', v)} placeholder="اسم القاعة" dir="rtl" />
                     )}
                     <Field label="Ceremony — Google Maps URL" value={data.ceremonyMapsUrl ?? ''} onChange={v => set('ceremonyMapsUrl', v)} placeholder="https://maps.google.com/..." />

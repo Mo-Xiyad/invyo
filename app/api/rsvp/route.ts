@@ -3,14 +3,32 @@ import { createClient } from '@/utils/supabase/server'
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, status, plusOne, invitationId } = await req.json() as {
-      name: string
-      status: 'accept' | 'maybe' | 'decline'
-      plusOne: boolean
+    const body = await req.json() as {
       invitationId?: string
+      name?: string
+      status?: 'accept' | 'maybe' | 'decline'
+      plusOne?: boolean
+      message?: string
+      attending?: boolean
+      guests?: number
+      notes?: string
     }
 
-    if (!name?.trim() || !status) {
+    const name = body.name?.trim()
+    const invitationId = body.invitationId
+    const attending = typeof body.attending === 'boolean'
+      ? body.attending
+      : body.status
+        ? body.status !== 'decline'
+        : undefined
+    const guests = Number.isFinite(body.guests)
+      ? Math.max(1, Math.floor(body.guests as number))
+      : body.plusOne
+        ? 2
+        : 1
+    const notes = body.notes?.trim() || body.message?.trim() || (body.status === 'maybe' ? 'maybe' : '')
+
+    if (!name || typeof attending !== 'boolean') {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
@@ -20,7 +38,6 @@ export async function POST(req: NextRequest) {
 
     const supabase = await createClient()
 
-    // Verify invitation exists and is published
     const { data: invitation } = await supabase
       .from('invitations')
       .select('id')
@@ -34,10 +51,10 @@ export async function POST(req: NextRequest) {
 
     const { error } = await supabase.from('rsvp_responses').insert({
       invitation_id: invitationId,
-      guest_name: name.trim(),
-      attending: status !== 'decline',
-      guests_count: plusOne ? 2 : 1,
-      message: status === 'maybe' ? 'maybe' : null,
+      guest_name: name,
+      attending,
+      guests_count: guests,
+      message: notes || null,
     })
 
     if (error) {

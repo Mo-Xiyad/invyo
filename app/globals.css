@@ -2,6 +2,31 @@
 
 /* next/font injects --font-syne and --font-dm-sans on <html> */
 
+/* Ivory Pavilion — local fonts */
+@font-face {
+  font-family: 'Carattere';
+  src: url('/fonts/ivory-pavilion/Carattere-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  src: url('/fonts/ivory-pavilion/SourceSerif4-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Serif 4';
+  src: url('/fonts/ivory-pavilion/SourceSerif4-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 @theme {
   /* Linktree-adjacent: same hue family (lime/sage), warmer & less saturated */
   --color-lt-lime: #d5e0d2;

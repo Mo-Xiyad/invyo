@@ -139,8 +139,54 @@ export const ARABIC_MOORISH_DEFAULTS: InvitationData = {
   musicUrl: '',
 }
 
+export const IVORY_PAVILION_DEFAULTS: InvitationData = {
+  groomNameEn: 'Alexander',
+  groomLastNameEn: 'Laurent',
+  groomNameAr: '',
+  brideNameEn: 'Isabelle',
+  brideLastNameEn: 'Moreau',
+  brideNameAr: '',
+  weddingDate: 'September 14',
+  weddingDateAr: '',
+  weddingYear: '2026',
+  weddingTime: '17:00',
+  weddingDay: 'Saturday',
+  weddingDayAr: '',
+  cityEn: 'Provence',
+  cityAr: '',
+  venueEn: 'Château de la Lumière',
+  venueAr: '',
+  ceremonyMapsUrl: 'https://www.google.com/maps/search/Provence+France',
+  receptionVenueEn: 'Grand Salon',
+  receptionCityEn: 'Provence',
+  receptionMapsUrl: '',
+  dresscodeType: 'Black Tie',
+  dresscodeMen: 'Black Tuxedo',
+  dresscodeMenColor: '#2C2416',
+  dresscodeWomen: 'Floor-length Gown',
+  dresscodeWomenColor: '#C8B99A',
+  hashtag: '#AlexanderAndIsabelle2026',
+  rsvpDeadline: 'August 1, 2026',
+  timeline: [
+    { time: '17:00', venue: 'Chapel Garden', event: 'Ceremony' },
+    { time: '18:30', venue: 'Terrace', event: 'Cocktail Hour' },
+    { time: '20:00', venue: 'Grand Salon', event: 'Dinner' },
+    { event: 'Dancing to follow' },
+  ],
+  lang2Code: '',
+  lang2Label: '',
+  lang2Date: '',
+  lang2City: '',
+  lang2Venue: '',
+  lang2DresscodeType: '',
+  lang2DresscodeMen: '',
+  lang2DresscodeWomen: '',
+  musicUrl: '',
+}
+
 /** Returns the right starter defaults for a given templateId */
 export function getTemplateDefaults(templateId: string): InvitationData {
   if (templateId === 'arabic-moorish') return ARABIC_MOORISH_DEFAULTS
+  if (templateId === 'ivory-pavilion') return IVORY_PAVILION_DEFAULTS
   return DEFAULT_INVITATION_DATA // riviera-dreams and any future templates
 }

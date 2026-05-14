@@ -38,6 +38,17 @@ export const TEMPLATES: TemplateConfig[] = [
     bgTo: '#DCE8F6',
     badgeLabel: 'New',
   },
+  {
+    id: 'ivory-pavilion',
+    name: 'Ivory Pavilion',
+    description: 'A sculptural baroque-inspired invitation. Plaster-white rose arches, classical columns, and Rococo ornaments frame a timeless celebration.',
+    tags: ['Baroque', 'Elegant', 'Classical', 'Romantic'],
+    previewPath: '/templates/ivory-pavilion',
+    accentColor: '#C8B99A',
+    bgFrom: '#F5F0EB',
+    bgTo: '#EDE9E3',
+    badgeLabel: 'New',
+  },
   // More templates coming soon — this is a placeholder card
   {
     id: 'coming-soon',

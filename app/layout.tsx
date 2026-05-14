@@ -107,7 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amarna:ital,wght@0,100..700;1,100..700&family=Caveat:wght@400..700&family=Satisfy&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=League+Script&family=Satisfy&display=swap" rel="stylesheet" />
       </head>
       <body suppressHydrationWarning className="antialiased">
         {children}
